@@ -3,10 +3,12 @@ package dev.jetclient.modules;
 import dev.jetclient.module.Category;
 import dev.jetclient.module.Module;
 
+import java.util.Collections;
+
 public class Hud extends Module {
 
     public Hud(String name, int keyBind, Category category) {
-        super(name, keyBind, category);
+        super(name, keyBind, category, Collections.emptyMap());
     }
 
     @Override

@@ -3,10 +3,12 @@ package dev.jetclient.modules;
 import dev.jetclient.module.Category;
 import dev.jetclient.module.Module;
 
+import java.util.Collections;
+
 public class Sprint extends Module {
 
     public Sprint(String name, int keyBind, Category category) {
-        super(name, keyBind, category);
+        super(name, keyBind, category, Collections.emptyMap());
     }
 
     @Override
