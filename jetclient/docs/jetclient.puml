@@ -1,0 +1,163 @@
+@startuml
+
+class Minecraft
+class GuiScreen
+class GuiChat
+class GuiIngame
+
+namespace command {
+class Command {
+    + getCommandName()
+    + getCommand()
+    + getUsage()
+    + printUsage()
+    + printString(String msg)
+    + executeCommand()
+}
+
+class CommandManager {
+    + getInstance()
+    + getPrefix()
+    + decodeCommand()
+    + getCommands()
+}
+}
+
+namespace commands {
+class ChangeKeybind {
+    + executeCommand()
+}
+}
+
+namespace gui {
+class Panel {
+    + drawScreen(int mouseX, int mouseY)
+    + mouseClicked(int mouseX, int mouseY, int mouseButton)
+    + mouseReleased(int mouseX, int mouseY, int state)
+}
+
+class PanelManager {
+
+}
+
+class ClickGui {
+    + drawScreen(int mouseX, int mouseY, int partialTicks)
+    + mouseClicked(int mouseX, int mouseY, int mouseButton)
+    + mouseReleased(int mouseX, int mouseY, int state)
+}
+
+class AltManagerScreen {
+    + drawScreen(GuiScreen guiScreen)
+}
+
+class GuiScreenManager {
+    + drawScreen(GuiScreen guiScreen)
+}
+}
+
+namespace hud {
+class HudItem {
+    + renderItem()
+}
+
+namespace items {
+class ModuleList {
+    + renderItem()
+}
+}
+
+class HudItemManager {
+    + getInstance()
+    + renderItems()
+}
+}
+
+namespace keybinds {
+class KeybindHandler {
+    + onKeyPressed(int keyCode)
+}
+}
+
+namespace module {
+class Module {
+    + getName()
+    + getKeyBind()
+    + setKeyBind(int keyBind)
+    + getCategory()
+    + getSettings()
+    + onEnable()
+    + onDisable()
+    + onUpdate()
+}
+
+class ModuleManager {
+    + getInstance()
+    + getAllModules()
+    + getActiveModules()
+    + onUpdate()
+    + getModuleByName(String module)
+    + toggleModule(Module module)
+    + getModulesByCategory()
+    + isModuleActive(String module)
+}
+
+enum Category {
+    PLAYER
+    RENDER
+    MOVEMENT
+}
+}
+
+namespace modules {
+class ChestStealer {
+    + onEnable()
+    + onDisable()
+    + onUpdate()
+}
+}
+
+namespace settings {
+class Setting {
+    + getActive()
+    + setActive(boolean active)
+    + getName()
+    + handleClick(int mouseX, int mouseY)
+    + draw(int x, int y)
+}
+}
+
+namespace settings {
+class SliderSetting {
+    + handleClick()
+    + draw(int x, int y)
+    + getSliderVal()
+}
+}
+
+Minecraft --> ModuleManager
+Minecraft --> KeybindHandler
+GuiChat --> CommandManager
+GuiIngame --> HudItemManager
+GuiScreenManager --> "*" GuiScreen
+ClickGui -|> GuiScreen
+AltManagerScreen -|> GuiScreen
+ModuleManager --> "*" Module
+Module --> Category
+Module --> "*" Setting
+KeybindHandler --> ModuleManager
+KeybindHandler --> GuiScreenManager
+Panel --> "*" Module
+Panel --> Category
+ClickGui --> PanelManager
+PanelManager --> "*" Panel
+Panel --> ModuleManager
+HudItem --> ModuleManager
+HudItemManager --> "*" HudItem
+CommandManager --> "*" Command
+Command --> ModuleManager
+ChangeKeybind -|> Command
+ModuleList -|> HudItem
+ChestStealer -|> Module
+SliderSetting -|> Setting
+
+@enduml
