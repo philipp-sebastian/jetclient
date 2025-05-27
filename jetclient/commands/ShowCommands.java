@@ -1,10 +1,8 @@
 package dev.jetclient.commands;
 
 import dev.jetclient.command.Command;
-import dev.jetclient.command.CommandManager;
 import dev.jetclient.module.ModuleManager;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 

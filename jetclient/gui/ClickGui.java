@@ -1,14 +1,6 @@
 package dev.jetclient.gui;
 
-import dev.jetclient.module.Category;
-import dev.jetclient.module.Module;
-import dev.jetclient.module.ModuleManager;
-import net.minecraft.client.gui.GuiScreen;
-import org.lwjgl.input.Keyboard;
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ClickGui extends KeyEventGuiScreen {
     PanelManager panelManager;

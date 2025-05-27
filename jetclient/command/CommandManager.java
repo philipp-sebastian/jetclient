@@ -1,12 +1,6 @@
 package dev.jetclient.command;
 
-import dev.jetclient.commands.ChangeKeybind;
-import dev.jetclient.commands.ShowCommands;
-import dev.jetclient.module.ModuleManager;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
 
 public class CommandManager {
     private final List<Command> commands;

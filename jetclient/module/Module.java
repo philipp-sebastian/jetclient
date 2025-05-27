@@ -3,7 +3,6 @@ package dev.jetclient.module;
 import dev.jetclient.setting.Setting;
 import net.minecraft.client.Minecraft;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Module {

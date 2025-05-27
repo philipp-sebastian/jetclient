@@ -1,8 +1,5 @@
 package dev.jetclient.hud;
 
-import dev.jetclient.hud.items.ModuleList;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class HudItemManager {

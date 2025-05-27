@@ -2,7 +2,6 @@ package dev.jetclient.modules;
 
 import dev.jetclient.module.Category;
 import dev.jetclient.module.Module;
-import net.minecraft.client.Minecraft;
 
 public class Sprint extends Module {
 

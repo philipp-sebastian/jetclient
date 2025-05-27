@@ -1,11 +1,5 @@
 package dev.jetclient.gui;
 
-import dev.jetclient.module.Category;
-import dev.jetclient.module.ModuleManager;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class PanelManager {

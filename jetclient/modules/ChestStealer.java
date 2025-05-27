@@ -1,6 +1,7 @@
 package dev.jetclient.modules;
 
-import dev.jetclient.module.*;
+import dev.jetclient.module.Category;
+import dev.jetclient.module.Module;
 import dev.jetclient.setting.Setting;
 import dev.jetclient.settings.BooleanSetting;
 import dev.jetclient.settings.SliderSetting;
