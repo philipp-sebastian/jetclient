@@ -1,11 +1,8 @@
 package dev.jetclient.keybinds;
 
-import dev.jetclient.gui.ClickGui;
 import dev.jetclient.gui.GuiScreenManager;
 import dev.jetclient.module.Module;
 import dev.jetclient.module.ModuleManager;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 
 public class KeybindHandler {
     private ModuleManager moduleManager;
@@ -19,7 +16,7 @@ public class KeybindHandler {
     public void onKeyPressed(int keyCode) {
         guiScreenManager.handleKeyEvent(keyCode);
 
-        for (Module module : moduleManager.getAllModules()) {
+        for (Module module : moduleManager.getModules()) {
             if (module.getKeyBind() != keyCode) continue;
             moduleManager.toggleModule(module);
             break;

@@ -9,14 +9,11 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class CommandManager {
-    private final ArrayList<Command> commands = new ArrayList<>();
+    private final List<Command> commands;
     private final String prefix = "#";
 
-    public CommandManager(ModuleManager moduleManager) {
-        Supplier<List<Command>> commandSupplier = () -> commands;
-
-        commands.add(new ChangeKeybind(moduleManager, "Change keybind", "bind",  "bind <modulename> <key>"));
-        commands.add(new ShowCommands(moduleManager, commandSupplier, "Show commands", "commands", "commands"));
+    public CommandManager(List<Command> commands) {
+        this.commands = commands;
     }
 
     public String getPrefix() {
@@ -32,7 +29,7 @@ public class CommandManager {
         }
     }
 
-    public ArrayList<Command> getCommands() {
+    public List<Command> getCommands() {
         return commands;
     }
 }

@@ -1,30 +1,22 @@
 package dev.jetclient.module;
 
-import dev.jetclient.modules.ChestStealer;
-import dev.jetclient.modules.Hud;
-import dev.jetclient.modules.Sprint;
-import dev.jetclient.modules.Step;
-import org.lwjgl.input.Keyboard;
-
 import java.util.*;
 
 public class ModuleManager {
-    private Set<Module> allModules = new HashSet<>();
-    private Set<Module> activeModules = new HashSet<>();
+    private final List<Module> modules;
+    private final List<Module> activeModules;
 
-    public ModuleManager() {
-        allModules.add(new Sprint("Sprint", Keyboard.KEY_0, Category.MOVEMENT));
-        allModules.add(new Step("Step", Keyboard.KEY_9, Category.MOVEMENT));
-        allModules.add(new ChestStealer("ChestStealer", Keyboard.KEY_2, Category.PLAYER));
-        allModules.add(new Hud("Hud", Keyboard.KEY_NONE, Category.HUD));
+    public ModuleManager(List<Module> modules) {
+        this.modules = modules;
+        this.activeModules = new ArrayList<>();
     }
 
-    public Set<Module> getAllModules() {
-        return Collections.unmodifiableSet(allModules);
+    public List<Module> getModules() {
+        return modules;
     }
 
-    public Set<Module> getActiveModules() {
-        return Collections.unmodifiableSet(activeModules);
+    public List<Module> getActiveModules() {
+        return activeModules;
     }
 
     public void onUpdate() {
@@ -34,7 +26,7 @@ public class ModuleManager {
     }
 
     public Module getModuleByName(String module) {
-        for (Module m : allModules) {
+        for (Module m : modules) {
             if (m.getName().equalsIgnoreCase(module)) {
                 return m;
             }
@@ -52,7 +44,7 @@ public class ModuleManager {
 
     public List<Module> getModulesByCategory(Category category) {
         List<Module> modulesByCategory = new ArrayList<>();
-        for (Module m : allModules) {
+        for (Module m : modules) {
             if (m.getCategory() == category) {
                 modulesByCategory.add(m);
             }

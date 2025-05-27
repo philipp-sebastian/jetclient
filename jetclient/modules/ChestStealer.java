@@ -1,11 +1,14 @@
 package dev.jetclient.modules;
 
 import dev.jetclient.module.*;
+import dev.jetclient.setting.Setting;
 import dev.jetclient.settings.BooleanSetting;
 import dev.jetclient.settings.SliderSetting;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraft.item.ItemStack;
+
+import java.util.HashMap;
 
 public class ChestStealer extends Module {
     private long lastStealTime = 0;
@@ -15,11 +18,12 @@ public class ChestStealer extends Module {
     private static final int EXTRA_VARIANCE = 75;
 
     public ChestStealer(String name, int keyBind, Category category) {
-        super(name, keyBind, category);
-        this.getSettings().put("Mode", new BooleanSetting("Mode"));
-        this.getSettings().put("Test", new BooleanSetting("Test"));
-        this.getSettings().put("Foo", new BooleanSetting("Foo"));
-        this.getSettings().put("Slider", new SliderSetting("Slider"));
+        super(name, keyBind, category, new HashMap<String, Setting>() {{
+            put("Mode", new BooleanSetting("Mode"));
+            put("Test", new BooleanSetting("Test"));
+            put("Foo", new BooleanSetting("Foo"));
+            put("Slider", new SliderSetting("Slider"));
+        }});
     }
 
     @Override

@@ -2,13 +2,22 @@ package dev.jetclient;
 
 import dev.jetclient.command.Command;
 import dev.jetclient.command.CommandManager;
+import dev.jetclient.commands.ChangeKeybind;
+import dev.jetclient.commands.ShowCommands;
 import dev.jetclient.gui.*;
 import dev.jetclient.hud.HudItem;
 import dev.jetclient.hud.HudItemManager;
 import dev.jetclient.hud.items.ModuleList;
+import dev.jetclient.init.*;
 import dev.jetclient.keybinds.KeybindHandler;
 import dev.jetclient.module.Category;
+import dev.jetclient.module.Module;
 import dev.jetclient.module.ModuleManager;
+import dev.jetclient.modules.ChestStealer;
+import dev.jetclient.modules.Hud;
+import dev.jetclient.modules.Sprint;
+import dev.jetclient.modules.Step;
+import dev.jetclient.setting.Setting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiIngame;
@@ -18,6 +27,7 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class JetClient {
     private static GuiScreenManager guiScreenManager;
@@ -34,52 +44,12 @@ public class JetClient {
     }
 
     public static void initialize() {
-        moduleManager = new ModuleManager();
-        panelManager = new PanelManager(initializePanelList());
-        guiScreenManager = new GuiScreenManager(initializeGuiScreenList());
+        moduleManager = new ModuleManager(ModuleInitializer.createModules());
+        panelManager = new PanelManager(PanelInitializer.createPanels(moduleManager));
+        guiScreenManager = new GuiScreenManager(GuiScreenInitializer.createGuiScreens(panelManager));
         keybindHandler = new KeybindHandler(moduleManager, guiScreenManager);
-        hudItemManager = new HudItemManager(initializeHudItemList());
-        commandManager = new CommandManager(moduleManager);
-    }
-
-    private static List<GuiScreen> initializeGuiScreenList() {
-        List<GuiScreen> guiScreens = new ArrayList<>();
-        guiScreens.add(new ClickGui(panelManager, Keyboard.KEY_RSHIFT));
-        guiScreens.add(new AltManagerScreen());
-
-        return guiScreens;
-    }
-
-    private static List<Panel> initializePanelList() {
-        final int PADDING = 15;
-        final int GAP = 10;
-
-        List<Panel> panels = new ArrayList<>();
-
-        ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
-
-        int screenWidth = sr.getScaledWidth();
-        int currentX = PADDING;
-        int currentY = PADDING;
-
-        for (Category category : Category.values()) {
-            panels.add(new Panel(moduleManager, moduleManager.getModulesByCategory(category), category, currentX, currentY));
-            currentX += Panel.getWidth() + GAP;
-
-            if (currentX + Panel.getWidth() > screenWidth) {
-                currentX = PADDING;
-                currentY = PADDING + Panel.getPadding() + Panel.getEntryHeight() + GAP;
-            }
-        }
-
-        return panels;
-    }
-
-    public static List<HudItem> initializeHudItemList() {
-        List<HudItem> hudItems = new ArrayList<>();
-        hudItems.add(new ModuleList(moduleManager));
-
-        return hudItems;
+        hudItemManager = new HudItemManager(HudItemInitializer.createHudItems(moduleManager));
+        commandManager = new CommandManager(CommandInitializer.createCommands(moduleManager));
     }
 
     public static void injectDependencies(Minecraft mc) {
