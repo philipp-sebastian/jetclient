@@ -16,7 +16,6 @@ class Command {
 }
 
 class CommandManager {
-    + getInstance()
     + getPrefix()
     + decodeCommand()
     + getCommands()
@@ -67,7 +66,6 @@ class ModuleList {
 }
 
 class HudItemManager {
-    + getInstance()
     + renderItems()
 }
 }
@@ -91,7 +89,6 @@ class Module {
 }
 
 class ModuleManager {
-    + getInstance()
     + getAllModules()
     + getActiveModules()
     + onUpdate()
