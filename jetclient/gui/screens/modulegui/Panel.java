@@ -1,4 +1,4 @@
-package dev.jetclient.gui;
+package dev.jetclient.gui.screens.modulegui;
 
 import dev.jetclient.module.Category;
 import dev.jetclient.module.Module;
@@ -17,10 +17,11 @@ public class Panel {
     private static final int ACTIVE_COLOR = 0x3EE900;
     private static final int INACTIVE_COLOR = 0xFFFFFFFF;
 
-    private ModuleManager moduleManager;
-    private List<Module> modules;
-    private Category category;
+    private final ModuleManager moduleManager;
+    private final Category category;
     private int x, y;
+
+    private final List<Module> modules;
 
     private boolean dragging = false;
     private int dragOffsetX, dragOffsetY;
@@ -29,46 +30,57 @@ public class Panel {
     private boolean showSettings = false;
     private Module selectedModule = null;
 
-    public Panel(ModuleManager moduleManager, List<Module> modules, Category category, int x, int y) {
+    public Panel(ModuleManager moduleManager, Category category, int x, int y) {
         this.moduleManager = moduleManager;
-        this.modules = modules;
         this.category = category;
         this.x = x;
         this.y = y;
+
+        this.modules = moduleManager.getModulesByCategory(category);
     }
 
     public void drawScreen(int mouseX, int mouseY) {
-        if (dragging) {
-            this.x = mouseX - dragOffsetX;
-            this.y = mouseY - dragOffsetY;
-        }
-
-        int panelHeight = ENTRY_HEIGHT + PADDING;
-        if (showModules) {
-            panelHeight += ENTRY_HEIGHT * modules.size();
-        }
-
-        drawBox(this.x, this.y, WIDTH, panelHeight, BACKGROUND_COLOR);
-        drawText(this.category.name(), this.x + PADDING, this.y + PADDING, 0xFFFFFFFF);
+        updateDrag(mouseX, mouseY);
+        drawPanelBackground();
+        drawCategoryTitle();
 
         if (!showModules) return;
 
-        int currentY = this.y + PADDING + ENTRY_HEIGHT;
-        for (Module m : modules) {
-            int color = moduleManager.getActiveModules().contains(m) ? ACTIVE_COLOR : INACTIVE_COLOR;
-            drawText(m.getName(), this.x + PADDING, currentY, color);
-            currentY += ENTRY_HEIGHT;
-        }
+        drawModules();
 
         if (showSettings && selectedModule != null) {
-            int height = getModuleHeight(selectedModule);
-            drawModuleSettings(selectedModule, this.x + WIDTH + 5, height);
+            drawModuleSettings(selectedModule, x + WIDTH + 5, getModuleHeight(selectedModule));
+        }
+    }
+
+    private void drawPanelBackground() {
+        int height = ENTRY_HEIGHT + PADDING + (showModules ? modules.size() * ENTRY_HEIGHT : 0);
+        drawBox(x, y, WIDTH, height, BACKGROUND_COLOR);
+    }
+
+    private void drawCategoryTitle() {
+        drawText(category.name(), x + PADDING, y + PADDING, 0xFFFFFFFF);
+    }
+
+    private void drawModules() {
+        int currentY = y + PADDING + ENTRY_HEIGHT;
+
+        for (Module m : modules) {
+            int color = moduleManager.isModuleActive(m.getName()) ? ACTIVE_COLOR : INACTIVE_COLOR;
+            drawText(m.getName(), x + PADDING, currentY, color);
+            currentY += ENTRY_HEIGHT;
         }
     }
 
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
-        int headerY = this.y + PADDING;
-        if (isInBox(mouseX, mouseY, this.x, headerY, WIDTH, ENTRY_HEIGHT)) {
+        if (handleHeaderClick(mouseX, mouseY, mouseButton)) return;
+        if (!showModules) return;
+        if (handleModuleClick(mouseX, mouseY, mouseButton)) return;
+        handleSettingClick(mouseX, mouseY);
+    }
+
+    private boolean handleHeaderClick(int mouseX, int mouseY, int mouseButton) {
+        if (isInBox(mouseX, mouseY, x, y + PADDING, WIDTH, ENTRY_HEIGHT)) {
             if (mouseButton == 0) {
                 dragging = true;
                 dragOffsetX = mouseX - x;
@@ -78,41 +90,51 @@ public class Panel {
                 selectedModule = null;
                 showSettings = false;
             }
-            return;
+            return true;
         }
+        return false;
+    }
 
-        if (!showModules) return;
-
-        int currentY = this.y + PADDING + ENTRY_HEIGHT;
+    private boolean handleModuleClick(int mouseX, int mouseY, int mouseButton) {
+        int currentY = y + PADDING + ENTRY_HEIGHT;
 
         for (Module m : modules) {
-            if (isInBox(mouseX, mouseY, this.x, currentY, WIDTH, ENTRY_HEIGHT)) {
+            if (isInBox(mouseX, mouseY, x, currentY, WIDTH, ENTRY_HEIGHT)) {
                 if (mouseButton == 0) {
                     moduleManager.toggleModule(m);
-                    return;
                 } else if (mouseButton == 1 && !m.getSettings().isEmpty()) {
-                    if (selectedModule != null && selectedModule.getName().equals(m.getName())) {
+                    if (m.getName().equals(selectedModule.getName())) {
                         selectedModule = null;
                         showSettings = false;
-                        return;
+                    } else {
+                        selectedModule = m;
+                        showSettings = true;
                     }
-                    selectedModule = m;
-                    showSettings = true;
-                    return;
                 }
+                return true;
             }
             currentY += ENTRY_HEIGHT;
         }
+        return false;
+    }
 
-        if (showSettings && selectedModule != null) {
-            int settingsY = this.y + PADDING + ENTRY_HEIGHT + (ENTRY_HEIGHT * modules.indexOf(selectedModule) + 1);
-            for (Setting s : selectedModule.getSettings().values()) {
-                if (isInBox(mouseX, mouseY, this.x + WIDTH + 5, settingsY, WIDTH, ENTRY_HEIGHT)) {
-                    s.handleClick(mouseX, mouseY);
-                    return;
-                }
-                settingsY += ENTRY_HEIGHT;
+    private void handleSettingClick(int mouseX, int mouseY) {
+        if (selectedModule == null) return;
+
+        int settingY = y + PADDING + ENTRY_HEIGHT * (modules.indexOf(selectedModule) + 1);
+        for (Setting s : selectedModule.getSettings().values()) {
+            if (isInBox(mouseX, mouseY, x + WIDTH + 5, settingY, WIDTH, ENTRY_HEIGHT)) {
+                s.handleClick(mouseX, mouseY);
+                return;
             }
+            settingY += ENTRY_HEIGHT;
+        }
+    }
+
+    private void updateDrag(int mouseX, int mouseY) {
+        if (dragging) {
+            this.x = mouseX - dragOffsetX;
+            this.y = mouseY - dragOffsetY;
         }
     }
 
@@ -121,9 +143,7 @@ public class Panel {
     }
 
     public void mouseReleased(int mouseX, int mouseY, int state) {
-        if (state == 0) {
-            dragging = false;
-        }
+        if (state == 0) dragging = false;
     }
 
     private void drawBox(int x, int y, int width, int heigth, int color) {

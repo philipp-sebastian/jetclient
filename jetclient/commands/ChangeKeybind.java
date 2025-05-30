@@ -3,12 +3,13 @@ package dev.jetclient.commands;
 import dev.jetclient.command.Command;
 import dev.jetclient.module.Module;
 import dev.jetclient.module.ModuleManager;
+import dev.jetclient.utils.MessagePrinter;
 import org.lwjgl.input.Keyboard;
 
 public class ChangeKeybind extends Command {
 
-    public ChangeKeybind(ModuleManager moduleManager, String commandName, String command, String usage) {
-        super(moduleManager, commandName, command, usage);
+    public ChangeKeybind(ModuleManager moduleManager, MessagePrinter messagePrinter) {
+        super(moduleManager, messagePrinter, "Change keybind", "bind", "bind <modulename> <key>");
     }
 
     @Override
@@ -23,17 +24,17 @@ public class ChangeKeybind extends Command {
         int keyCode = Keyboard.getKeyIndex(keyName);
 
         if (keyCode == Keyboard.KEY_NONE) {
-            this.printString("Invalid key");
+            this.printMessage("Invalid key");
             return;
         }
 
-        Module m = moduleManager.getModuleByName(moduleName);
-        if (m == null) {
-            this.printString("Invalid module");
+        Module module = moduleManager.getModuleByName(moduleName);
+        if (module == null) {
+            this.printMessage("Invalid module");
             return;
         }
 
-        m.setKeyBind(keyCode);
-        this.printString("Module: " + m.getName() + " bound to key: " + Keyboard.getKeyName(m.getKeyBind()));
+        module.setKeyBind(keyCode);
+        this.printMessage("Module: " + module.getName() + " bound to key: " + Keyboard.getKeyName(module.getKeyBind()));
     }
 }

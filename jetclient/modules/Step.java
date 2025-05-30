@@ -3,19 +3,20 @@ package dev.jetclient.modules;
 import dev.jetclient.module.Category;
 import dev.jetclient.module.Module;
 import net.minecraft.client.Minecraft;
+import org.lwjgl.input.Keyboard;
 
 import java.util.Collections;
 
 public class Step extends Module {
     private float stepHeight;
 
-    public Step(String name, int keyBind, Category category) {
-        super(name, keyBind, category, Collections.emptyMap());
+    public Step() {
+        super("Step", Keyboard.KEY_NONE, Category.MOVEMENT, Collections.emptyMap());
     }
 
     @Override
     public void onEnable() {
-        stepHeight = Minecraft.getMinecraft().thePlayer.stepHeight;
+        this.stepHeight = Minecraft.getMinecraft().thePlayer.stepHeight;
         mc.thePlayer.stepHeight = 1.0F;
     }
 

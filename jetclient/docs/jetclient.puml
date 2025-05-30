@@ -1,9 +1,11 @@
 @startuml
 
+namespace minecraft {
 class Minecraft
 class GuiScreen
 class GuiChat
 class GuiIngame
+}
 
 namespace command {
 class Command {
@@ -29,6 +31,8 @@ class ChangeKeybind {
 }
 
 namespace gui {
+namespace screens {
+namespace modulegui {
 class Panel {
     + drawScreen(int mouseX, int mouseY)
     + mouseClicked(int mouseX, int mouseY, int mouseButton)
@@ -36,21 +40,29 @@ class Panel {
 }
 
 class PanelManager {
-
+    + drawPanels()
+    + mouseClicked()
+    + mouseReleased()
 }
-
-class ClickGui {
+class ModuleGui {
     + drawScreen(int mouseX, int mouseY, int partialTicks)
     + mouseClicked(int mouseX, int mouseY, int mouseButton)
     + mouseReleased(int mouseX, int mouseY, int state)
 }
+}
 
-class AltManagerScreen {
+class AltLogin {
     + drawScreen(GuiScreen guiScreen)
+}
 }
 
 class GuiScreenManager {
+    + displayAltLogin()
     + drawScreen(GuiScreen guiScreen)
+}
+
+class HotkeyScreen {
+    + getKeyCode()
 }
 }
 
@@ -131,30 +143,38 @@ class SliderSetting {
 }
 }
 
-Minecraft --> ModuleManager
-Minecraft --> KeybindHandler
-GuiChat --> CommandManager
-GuiIngame --> HudItemManager
-GuiScreenManager --> "*" GuiScreen
-ClickGui -|> GuiScreen
-AltManagerScreen -|> GuiScreen
-ModuleManager --> "*" Module
-Module --> Category
-Module --> "*" Setting
-KeybindHandler --> ModuleManager
-KeybindHandler --> GuiScreenManager
-Panel --> "*" Module
-Panel --> Category
-ClickGui --> PanelManager
-PanelManager --> "*" Panel
-Panel --> ModuleManager
-HudItem --> ModuleManager
-HudItemManager --> "*" HudItem
-CommandManager --> "*" Command
-Command --> ModuleManager
-ChangeKeybind -|> Command
-ModuleList -|> HudItem
-ChestStealer -|> Module
-SliderSetting -|> Setting
+namespace utils {
+class MessagePrinter {
+    + printMessage(String message)
+}
+}
+
+Minecraft ..> ModuleManager
+Minecraft ..> KeybindHandler
+GuiChat ..> CommandManager
+GuiIngame ..> HudItemManager
+GuiScreenManager ..> "*" GuiScreen
+ModuleGui ..|> HotkeyScreen
+HotkeyScreen ..|> GuiScreen
+AltLogin ..|> GuiScreen
+ModuleManager ..> "*" Module
+Module ..> Category
+Module ..> "*" Setting
+KeybindHandler ..> ModuleManager
+KeybindHandler ..> GuiScreenManager
+Panel ..> "*" Module
+Panel ..> Category
+ModuleGui ..> PanelManager
+PanelManager ..> "*" Panel
+Panel ..> ModuleManager
+HudItem ..> ModuleManager
+HudItemManager ..> "*" HudItem
+CommandManager ..> "*" Command
+Command ..> ModuleManager
+Command ..> MessagePrinter
+ChangeKeybind ..|> Command
+ModuleList ..|> HudItem
+ChestStealer ..|> Module
+SliderSetting ..|> Setting
 
 @enduml

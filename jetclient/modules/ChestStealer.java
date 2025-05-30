@@ -8,6 +8,7 @@ import dev.jetclient.settings.SliderSetting;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraft.item.ItemStack;
+import org.lwjgl.input.Keyboard;
 
 import java.util.HashMap;
 
@@ -18,8 +19,8 @@ public class ChestStealer extends Module {
     private static final int MAX_DELAY = 500;
     private static final int EXTRA_VARIANCE = 75;
 
-    public ChestStealer(String name, int keyBind, Category category) {
-        super(name, keyBind, category, new HashMap<String, Setting>() {{
+    public ChestStealer() {
+        super("ChestStealer", Keyboard.KEY_NONE, Category.PLAYER, new HashMap<String, Setting>() {{
             put("Mode", new BooleanSetting("Mode"));
             put("Test", new BooleanSetting("Test"));
             put("Foo", new BooleanSetting("Foo"));

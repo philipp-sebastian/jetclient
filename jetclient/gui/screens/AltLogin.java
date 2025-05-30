@@ -1,4 +1,4 @@
-package dev.jetclient.gui;
+package dev.jetclient.gui.screens;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -6,7 +6,7 @@ import net.minecraft.client.gui.GuiTextField;
 
 import java.io.IOException;
 
-public class AltManagerScreen extends GuiScreen {
+public class AltLogin extends GuiScreen {
 
     private GuiTextField username;
     private GuiTextField password;

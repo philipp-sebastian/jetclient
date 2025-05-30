@@ -1,6 +1,6 @@
 package dev.jetclient.settings;
 
-import dev.jetclient.gui.Panel;
+import dev.jetclient.gui.screens.modulegui.Panel;
 import dev.jetclient.setting.Setting;
 import net.minecraft.client.gui.Gui;
 
@@ -10,6 +10,10 @@ public class SliderSetting extends Setting {
 
     public SliderSetting(String name) {
         super(name);
+    }
+
+    public float getSliderVal() {
+        return this.sliderVal;
     }
 
     @Override
@@ -24,9 +28,5 @@ public class SliderSetting extends Setting {
 
         Gui.drawRect(x, y, x + Panel.getWidth(), y + Panel.getEntryHeight(), 0xFF222222);
         Gui.drawRect(x, y, (int) (x + (sliderVal * 100)), y + Panel.getEntryHeight(), 0xFF3EE900);
-    }
-
-    public float getSliderVal() {
-        return this.sliderVal;
     }
 }

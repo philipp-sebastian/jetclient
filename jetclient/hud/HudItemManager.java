@@ -3,7 +3,7 @@ package dev.jetclient.hud;
 import java.util.List;
 
 public class HudItemManager {
-    private List<HudItem> hudItems;
+    private final List<HudItem> hudItems;
 
     public HudItemManager(List<HudItem> hudItems) {
         this.hudItems = hudItems;
@@ -11,7 +11,7 @@ public class HudItemManager {
 
     public void renderItems() {
         for (HudItem drawableItem : hudItems) {
-            drawableItem.renderItem();
+            if (drawableItem.shouldRender()) drawableItem.renderItem();
         }
     }
 }

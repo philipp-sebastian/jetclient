@@ -2,11 +2,12 @@ package dev.jetclient;
 
 import dev.jetclient.command.CommandManager;
 import dev.jetclient.gui.GuiScreenManager;
-import dev.jetclient.gui.PanelManager;
+import dev.jetclient.gui.screens.modulegui.PanelManager;
 import dev.jetclient.hud.HudItemManager;
 import dev.jetclient.init.*;
 import dev.jetclient.keybinds.KeybindHandler;
 import dev.jetclient.module.ModuleManager;
+import dev.jetclient.utils.MessagePrinter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiIngame;
@@ -18,6 +19,7 @@ public class JetClient {
     private static HudItemManager hudItemManager;
     private static CommandManager commandManager;
     private static PanelManager panelManager;
+    private static MessagePrinter messagePrinter;
 
     private final static String clientName = "Jet";
 
@@ -31,7 +33,8 @@ public class JetClient {
         guiScreenManager = new GuiScreenManager(GuiScreenInitializer.createGuiScreens(panelManager));
         keybindHandler = new KeybindHandler(moduleManager, guiScreenManager);
         hudItemManager = new HudItemManager(HudItemInitializer.createHudItems(moduleManager));
-        commandManager = new CommandManager(CommandInitializer.createCommands(moduleManager));
+        messagePrinter = new MessagePrinter();
+        commandManager = new CommandManager(CommandInitializer.createCommands(moduleManager, messagePrinter));
     }
 
     public static void injectDependencies(Minecraft mc) {

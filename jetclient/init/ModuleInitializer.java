@@ -14,11 +14,10 @@ import java.util.List;
 public class ModuleInitializer {
     public static List<Module> createModules() {
         List<Module> modules = new ArrayList<>();
-
-        modules.add(new Sprint("Sprint", Keyboard.KEY_0, Category.MOVEMENT));
-        modules.add(new Step("Step", Keyboard.KEY_9, Category.MOVEMENT));
-        modules.add(new ChestStealer("ChestStealer", Keyboard.KEY_2, Category.PLAYER));
-        modules.add(new Hud("Hud", Keyboard.KEY_NONE, Category.HUD));
+        modules.add(new Sprint());
+        modules.add(new Step());
+        modules.add(new ChestStealer());
+        modules.add(new Hud());
 
         return modules;
     }

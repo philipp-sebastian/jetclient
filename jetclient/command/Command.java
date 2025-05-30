@@ -1,18 +1,18 @@
 package dev.jetclient.command;
 
-import dev.jetclient.JetClient;
 import dev.jetclient.module.ModuleManager;
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.ChatComponentText;
+import dev.jetclient.utils.MessagePrinter;
 
 public abstract class Command {
     protected final ModuleManager moduleManager;
+    protected final MessagePrinter messagePrinter;
     private final String commandName;
     private final String command;
     private final String usage;
 
-    protected Command(ModuleManager moduleManager, String commandName, String command, String usage) {
+    protected Command(ModuleManager moduleManager, MessagePrinter messagePrinter, String commandName, String command, String usage) {
         this.moduleManager = moduleManager;
+        this.messagePrinter = messagePrinter;
         this.commandName = commandName;
         this.command = command;
         this.usage = usage;
@@ -30,12 +30,12 @@ public abstract class Command {
         return "#" + this.usage;
     }
 
-    public void printUsage() {
-        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(JetClient.getClientName() + " >> Usage: " + this.usage));
+    protected void printUsage() {
+        messagePrinter.printMessage(this.usage);
     }
 
-    public void printString(String msg) {
-        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(JetClient.getClientName() + " >> " + msg));
+    protected void printMessage(String msg) {
+        messagePrinter.printMessage(msg);
     }
     public abstract void executeCommand(String[] args);
 }

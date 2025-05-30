@@ -43,6 +43,16 @@ public class ModuleManager {
         }
     }
 
+    public boolean handleKeyEvent(int keyCode) {
+        for (Module m : modules) {
+            if (m.getKeyBind() == keyCode) {
+                toggleModule(m);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public List<Module> getModulesByCategory(Category category) {
         List<Module> modulesByCategory = new ArrayList<>();
         for (Module m : modules) {

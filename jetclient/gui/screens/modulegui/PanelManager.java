@@ -1,4 +1,4 @@
-package dev.jetclient.gui;
+package dev.jetclient.gui.screens.modulegui;
 
 import java.util.List;
 
@@ -21,13 +21,9 @@ public class PanelManager {
         }
     }
 
-    protected void mouseReleased(int mouseX, int mouseY, int state) {
+    public void mouseReleased(int mouseX, int mouseY, int state) {
         for (Panel p : panels) {
             p.mouseReleased(mouseX, mouseY, state);
         }
-    }
-
-    private void initPanels() {
-
     }
 }

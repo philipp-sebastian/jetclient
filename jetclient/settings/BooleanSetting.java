@@ -1,12 +1,22 @@
 package dev.jetclient.settings;
 
-import dev.jetclient.gui.Panel;
+import dev.jetclient.gui.screens.modulegui.Panel;
 import dev.jetclient.setting.Setting;
 import net.minecraft.client.Minecraft;
 
 public class BooleanSetting extends Setting {
+    private boolean active = false;
+
     public BooleanSetting(String name) {
         super(name);
+    }
+
+    public boolean getActive() {
+        return this.active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     @Override
@@ -16,7 +26,7 @@ public class BooleanSetting extends Setting {
 
     @Override
     public void draw(int x, int y) {
-        int color = this.getActive() ? Panel.getActiveColor() : Panel.getInactiveColor();
+        int color = getActive() ? Panel.getActiveColor() : Panel.getInactiveColor();
         Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.getName(), x, y, color);
     }
 }

@@ -2,13 +2,14 @@ package dev.jetclient.modules;
 
 import dev.jetclient.module.Category;
 import dev.jetclient.module.Module;
+import org.lwjgl.input.Keyboard;
 
 import java.util.Collections;
 
 public class Sprint extends Module {
 
-    public Sprint(String name, int keyBind, Category category) {
-        super(name, keyBind, category, Collections.emptyMap());
+    public Sprint() {
+        super("Sprint", Keyboard.KEY_0, Category.MOVEMENT, Collections.emptyMap());
     }
 
     @Override

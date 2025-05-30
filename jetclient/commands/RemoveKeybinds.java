@@ -3,11 +3,12 @@ package dev.jetclient.commands;
 import dev.jetclient.command.Command;
 import dev.jetclient.module.Module;
 import dev.jetclient.module.ModuleManager;
+import dev.jetclient.utils.MessagePrinter;
 import org.lwjgl.input.Keyboard;
 
 public class RemoveKeybinds extends Command {
-    public RemoveKeybinds(ModuleManager moduleManager, String commandName, String command, String usage) {
-        super(moduleManager, commandName, command, usage);
+    public RemoveKeybinds(ModuleManager moduleManager, MessagePrinter messagePrinter) {
+        super(moduleManager, messagePrinter, "Remove all keybinds", "removekeybinds", "removekeybinds");
     }
 
     @Override
@@ -16,6 +17,6 @@ public class RemoveKeybinds extends Command {
             m.setKeyBind(Keyboard.KEY_NONE);
         }
 
-        printString("Successfully removed all keybinds");
+        printMessage("Successfully removed all keybinds");
     }
 }

@@ -5,8 +5,8 @@ import dev.jetclient.module.Module;
 import dev.jetclient.module.ModuleManager;
 
 public class KeybindHandler {
-    private ModuleManager moduleManager;
-    private GuiScreenManager guiScreenManager;
+    private final ModuleManager moduleManager;
+    private final GuiScreenManager guiScreenManager;
 
     public KeybindHandler(ModuleManager moduleManager, GuiScreenManager guiScreenManager) {
         this.moduleManager = moduleManager;
@@ -14,12 +14,9 @@ public class KeybindHandler {
     }
 
     public void onKeyPressed(int keyCode) {
-        guiScreenManager.handleKeyEvent(keyCode);
+        /* GuiScreens have higher priority */
+        if (guiScreenManager.handleKeyEvent(keyCode)) return;
 
-        for (Module module : moduleManager.getModules()) {
-            if (module.getKeyBind() != keyCode) continue;
-            moduleManager.toggleModule(module);
-            break;
-        }
+        moduleManager.handleKeyEvent(keyCode);
     }
 }

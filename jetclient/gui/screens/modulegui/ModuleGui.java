@@ -1,12 +1,15 @@
-package dev.jetclient.gui;
+package dev.jetclient.gui.screens.modulegui;
+
+import dev.jetclient.gui.HotkeyScreen;
+import org.lwjgl.input.Keyboard;
 
 import java.io.IOException;
 
-public class ClickGui extends KeyEventGuiScreen {
+public class ModuleGui extends HotkeyScreen {
     PanelManager panelManager;
 
-    public ClickGui(PanelManager panelManager, int keyCode) {
-        super(keyCode);
+    public ModuleGui(PanelManager panelManager) {
+        super(Keyboard.KEY_RSHIFT);
 
         this.panelManager = panelManager;
     }

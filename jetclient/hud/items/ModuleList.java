@@ -14,8 +14,6 @@ public class ModuleList extends HudItem {
 
     @Override
     public void renderItem() {
-        if (!shouldRender()) return;
-
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
         int yOffset = 1;
 
