@@ -4,7 +4,6 @@ import dev.jetclient.gui.screens.AltLogin;
 import dev.jetclient.gui.screens.modulegui.ModuleGui;
 import dev.jetclient.gui.screens.modulegui.PanelManager;
 import net.minecraft.client.gui.GuiScreen;
-import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;
 import java.util.List;

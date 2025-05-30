@@ -1,10 +1,10 @@
-package dev.jetclient.modules;
+package dev.jetclient.module.modules;
 
 import dev.jetclient.module.Category;
 import dev.jetclient.module.Module;
 import dev.jetclient.setting.Setting;
-import dev.jetclient.settings.BooleanSetting;
-import dev.jetclient.settings.SliderSetting;
+import dev.jetclient.setting.settings.BooleanSetting;
+import dev.jetclient.setting.settings.SliderSetting;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraft.item.ItemStack;
@@ -29,10 +29,12 @@ public class ChestStealer extends Module {
     }
 
     @Override
-    public void onEnable() {}
+    public void onEnable() {
+    }
 
     @Override
-    public void onDisable() {}
+    public void onDisable() {
+    }
 
     @Override
     public void onUpdate() {

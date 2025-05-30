@@ -1,7 +1,6 @@
 package dev.jetclient.keybinds;
 
 import dev.jetclient.gui.GuiScreenManager;
-import dev.jetclient.module.Module;
 import dev.jetclient.module.ModuleManager;
 
 public class KeybindHandler {

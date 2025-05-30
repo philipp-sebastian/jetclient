@@ -32,11 +32,17 @@ public abstract class Module {
         this.keyBind = keyBind;
     }
 
-    public Category getCategory() { return this.category; }
+    public Category getCategory() {
+        return this.category;
+    }
 
-    public Map<String, Setting> getSettings() { return this.settings; }
+    public Map<String, Setting> getSettings() {
+        return this.settings;
+    }
 
     public abstract void onEnable();
+
     public abstract void onDisable();
+
     public abstract void onUpdate();
 }

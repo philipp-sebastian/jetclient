@@ -22,7 +22,7 @@ public class GuiScreenManager {
                 return true;
             }
         }
-        return  false;
+        return false;
     }
 
     public void displayAltLogin() {

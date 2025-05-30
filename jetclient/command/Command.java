@@ -37,5 +37,6 @@ public abstract class Command {
     protected void printMessage(String msg) {
         messagePrinter.printMessage(msg);
     }
+
     public abstract void executeCommand(String[] args);
 }

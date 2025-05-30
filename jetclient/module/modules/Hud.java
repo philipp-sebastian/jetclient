@@ -1,4 +1,4 @@
-package dev.jetclient.modules;
+package dev.jetclient.module.modules;
 
 import dev.jetclient.module.Category;
 import dev.jetclient.module.Module;
@@ -13,11 +13,14 @@ public class Hud extends Module {
     }
 
     @Override
-    public void onEnable() {}
+    public void onEnable() {
+    }
 
     @Override
-    public void onDisable() {}
+    public void onDisable() {
+    }
 
     @Override
-    public void onUpdate() {}
+    public void onUpdate() {
+    }
 }

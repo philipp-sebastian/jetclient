@@ -1,9 +1,9 @@
 package dev.jetclient.init;
 
 import dev.jetclient.command.Command;
-import dev.jetclient.commands.ChangeKeybind;
-import dev.jetclient.commands.RemoveKeybinds;
-import dev.jetclient.commands.ShowCommands;
+import dev.jetclient.command.commands.ChangeKeybind;
+import dev.jetclient.command.commands.RemoveKeybinds;
+import dev.jetclient.command.commands.ShowCommands;
 import dev.jetclient.module.ModuleManager;
 import dev.jetclient.utils.MessagePrinter;
 

@@ -1,4 +1,4 @@
-package dev.jetclient.commands;
+package dev.jetclient.command.commands;
 
 import dev.jetclient.command.Command;
 import dev.jetclient.module.Module;

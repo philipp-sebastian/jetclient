@@ -1,4 +1,4 @@
-package dev.jetclient.modules;
+package dev.jetclient.module.modules;
 
 import dev.jetclient.module.Category;
 import dev.jetclient.module.Module;

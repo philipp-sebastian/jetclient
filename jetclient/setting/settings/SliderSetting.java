@@ -1,4 +1,4 @@
-package dev.jetclient.settings;
+package dev.jetclient.setting.settings;
 
 import dev.jetclient.gui.screens.modulegui.Panel;
 import dev.jetclient.setting.Setting;

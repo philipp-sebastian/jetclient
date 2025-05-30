@@ -13,20 +13,20 @@ class Command {
     + getCommand()
     + getUsage()
     + printUsage()
-    + printString(String msg)
+    + printMessage(String message)
+    + executeCommand(String[] args)
+}
+
+namespace commands {
+class ChangeKeybind {
     + executeCommand()
+}
 }
 
 class CommandManager {
     + getPrefix()
     + decodeCommand()
     + getCommands()
-}
-}
-
-namespace commands {
-class ChangeKeybind {
-    + executeCommand()
 }
 }
 
@@ -52,13 +52,13 @@ class ModuleGui {
 }
 
 class AltLogin {
-    + drawScreen(GuiScreen guiScreen)
+    + drawScreen(int mouseX, int mouseY, float partialTicks)
 }
 }
 
 class GuiScreenManager {
+    + handleKeyEvent(int keyCode)
     + displayAltLogin()
-    + drawScreen(GuiScreen guiScreen)
 }
 
 class HotkeyScreen {
@@ -69,6 +69,7 @@ class HotkeyScreen {
 namespace hud {
 class HudItem {
     + renderItem()
+    + shouldRender()
 }
 
 namespace items {
@@ -100,10 +101,19 @@ class Module {
     + onUpdate()
 }
 
+namespace modules {
+class ChestStealer {
+    + onEnable()
+    + onDisable()
+    + onUpdate()
+}
+}
+
 class ModuleManager {
-    + getAllModules()
+    + getModules()
     + getActiveModules()
     + onUpdate()
+    + handleKeyEvent(int keyCode)
     + getModuleByName(String module)
     + toggleModule(Module module)
     + getModulesByCategory()
@@ -117,15 +127,7 @@ enum Category {
 }
 }
 
-namespace modules {
-class ChestStealer {
-    + onEnable()
-    + onDisable()
-    + onUpdate()
-}
-}
-
-namespace settings {
+namespace setting {
 class Setting {
     + getActive()
     + setActive(boolean active)
@@ -133,13 +135,13 @@ class Setting {
     + handleClick(int mouseX, int mouseY)
     + draw(int x, int y)
 }
-}
 
 namespace settings {
 class SliderSetting {
-    + handleClick()
+    + handleClick(int mouseX, int mouseY)
     + draw(int x, int y)
     + getSliderVal()
+}
 }
 }
 
