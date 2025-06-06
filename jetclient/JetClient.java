@@ -7,6 +7,7 @@ import dev.jetclient.hud.HudItemManager;
 import dev.jetclient.init.*;
 import dev.jetclient.keybinds.KeybindHandler;
 import dev.jetclient.module.ModuleManager;
+import dev.jetclient.utils.DelayCalculator;
 import dev.jetclient.utils.MessagePrinter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
@@ -20,6 +21,7 @@ public class JetClient {
     private static CommandManager commandManager;
     private static PanelManager panelManager;
     private static MessagePrinter messagePrinter;
+    private static DelayCalculator delayCalculator;
 
     private final static String clientName = "Jet";
 
@@ -28,7 +30,8 @@ public class JetClient {
     }
 
     public static void initialize() {
-        moduleManager = new ModuleManager(ModuleInitializer.createModules());
+        delayCalculator = new DelayCalculator();
+        moduleManager = new ModuleManager(ModuleInitializer.createModules(delayCalculator));
         panelManager = new PanelManager(PanelInitializer.createPanels(moduleManager));
         guiScreenManager = new GuiScreenManager(GuiScreenInitializer.createGuiScreens(panelManager));
         keybindHandler = new KeybindHandler(moduleManager, guiScreenManager);

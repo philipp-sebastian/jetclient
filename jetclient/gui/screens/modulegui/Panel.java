@@ -97,18 +97,17 @@ public class Panel {
 
     private boolean handleModuleClick(int mouseX, int mouseY, int mouseButton) {
         int currentY = y + PADDING + ENTRY_HEIGHT;
-
         for (Module m : modules) {
             if (isInBox(mouseX, mouseY, x, currentY, WIDTH, ENTRY_HEIGHT)) {
                 if (mouseButton == 0) {
                     moduleManager.toggleModule(m);
                 } else if (mouseButton == 1 && !m.getSettings().isEmpty()) {
-                    if (m.getName().equals(selectedModule.getName())) {
-                        selectedModule = null;
-                        showSettings = false;
-                    } else {
+                    if (selectedModule == null || !selectedModule.getName().equals(m.getName())) {
                         selectedModule = m;
                         showSettings = true;
+                    } else {
+                        selectedModule = null;
+                        showSettings = false;
                     }
                 }
                 return true;

@@ -5,6 +5,7 @@ import dev.jetclient.module.Module;
 import dev.jetclient.setting.Setting;
 import dev.jetclient.setting.settings.BooleanSetting;
 import dev.jetclient.setting.settings.SliderSetting;
+import dev.jetclient.utils.DelayCalculator;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraft.item.ItemStack;
@@ -13,19 +14,21 @@ import org.lwjgl.input.Keyboard;
 import java.util.HashMap;
 
 public class ChestStealer extends Module {
+    private final DelayCalculator delayCalculator;
     private long lastStealTime = 0;
     private long delay = 0;
 
     private static final int MAX_DELAY = 500;
     private static final int EXTRA_VARIANCE = 75;
 
-    public ChestStealer() {
+    public ChestStealer(DelayCalculator delayCalculator) {
         super("ChestStealer", Keyboard.KEY_NONE, Category.PLAYER, new HashMap<String, Setting>() {{
             put("Mode", new BooleanSetting("Mode"));
             put("Test", new BooleanSetting("Test"));
             put("Foo", new BooleanSetting("Foo"));
             put("Slider", new SliderSetting("Slider"));
         }});
+        this.delayCalculator = delayCalculator;
     }
 
     @Override
@@ -56,23 +59,18 @@ public class ChestStealer extends Module {
 
         for (int i = 0; i < chestContainer.getLowerChestInventory().getSizeInventory(); i++) {
             ItemStack itemStack = chestContainer.getLowerChestInventory().getStackInSlot(i);
+
             if (itemStack != null && itemStack.stackSize > 0) {
                 mc.playerController.windowClick(chestContainer.windowId, i, 0, 1, mc.thePlayer);
+
                 lastStealTime = System.currentTimeMillis();
-                delay = calculateDelay();
+                SliderSetting sliderSetting = (SliderSetting) getSettings().get("Slider");
+                delay = delayCalculator.calculateDelay(sliderSetting.getSliderVal(), MAX_DELAY, EXTRA_VARIANCE);
                 return;
             }
         }
 
         mc.thePlayer.closeScreen();
-    }
-
-    private long calculateDelay() {
-        SliderSetting slider = (SliderSetting) getSettings().get("Slider");
-        float sliderVal = slider != null ? slider.getSliderVal() : 0f;
-
-        int minInterval = (int) ((1 - sliderVal) * MAX_DELAY);
-        return minInterval + (long) (Math.random() * EXTRA_VARIANCE);
     }
 
     private boolean inventoryFull() {
