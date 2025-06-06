@@ -48,16 +48,17 @@ public class KillAura extends Module {
             if (entity == mc.thePlayer) continue;
 
             if (entity instanceof EntityAnimal) {
-                double entityX = entity.posX - mc.thePlayer.posX;
-                double entityY = entity.posY + (entity.height / 2) - mc.thePlayer.posY + mc.thePlayer.getEyeHeight();
-                double entityZ = entity.posZ - mc.thePlayer.posZ;
+                float entityX = (float) (entity.posX - mc.thePlayer.posX);
+                float entityY = (float) (entity.posY + entity.getEyeHeight() - (mc.thePlayer.posY + mc.thePlayer.getEyeHeight()));
+                float entityZ = (float) (entity.posZ - mc.thePlayer.posZ);
 
-                mc.thePlayer.rotationYaw = (float) Math.toDegrees(Math.atan2(entityZ, entityX) - 90F);
-                mc.thePlayer.rotationPitch = (float) Math.toDegrees(Math.atan2(entityY, Math.sqrt(entityX * entityX + entityZ * entityZ)));
+                mc.thePlayer.rotationYaw = (float) Math.toDegrees(Math.atan2(entityZ, entityX)) - 90F;
+                mc.thePlayer.rotationPitch = (float) -Math.toDegrees(Math.atan2(entityY, Math.sqrt(entityX * entityX + entityZ * entityZ)));
 
                 if (System.currentTimeMillis() - lastSwingTime < delay) return;
 
                 mc.thePlayer.swingItem();
+                mc.playerController.attackEntity(mc.thePlayer, entity);
 
                 lastSwingTime = System.currentTimeMillis();
                 SliderSetting sliderSetting = (SliderSetting) getSettings().get("Slider");
