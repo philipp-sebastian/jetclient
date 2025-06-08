@@ -8,6 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 
 import java.util.List;
+import java.util.Map;
 
 public class Panel {
     private static final int WIDTH = 100;
@@ -117,16 +118,17 @@ public class Panel {
         return false;
     }
 
+    //old
     private void handleSettingClick(int mouseX, int mouseY) {
-        if (selectedModule == null) return;
+        if (!showSettings || selectedModule == null) return;
 
-        int settingY = y + PADDING + ENTRY_HEIGHT * (modules.indexOf(selectedModule) + 1);
-        for (Setting s : selectedModule.getSettings().values()) {
-            if (isInBox(mouseX, mouseY, x + WIDTH + 5, settingY, WIDTH, ENTRY_HEIGHT)) {
-                s.handleClick(mouseX, mouseY);
+        int settingY = y + PADDING + ENTRY_HEIGHT * (modules.indexOf(selectedModule) + 1) + PADDING;
+        for (Setting setting : selectedModule.getSettings().values()) {
+            if (isInBox(mouseX, mouseY, x + WIDTH + 5, settingY, WIDTH, setting.getHeight())) {
+                setting.handleClick(mouseX, mouseY);
                 return;
             }
-            settingY += ENTRY_HEIGHT;
+            settingY += setting.getHeight();
         }
     }
 
@@ -138,7 +140,7 @@ public class Panel {
     }
 
     private boolean isInBox(int mouseX, int mouseY, int x, int y, int width, int height) {
-        return (mouseX > x && mouseX < x + width && mouseY > y && mouseY < y + height);
+        return (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height);
     }
 
     public void mouseReleased(int mouseX, int mouseY, int state) {
@@ -154,12 +156,16 @@ public class Panel {
     }
 
     private void drawModuleSettings(Module selectedModule, int x, int y) {
-        drawBox(x, y, WIDTH, ENTRY_HEIGHT * selectedModule.getSettings().size() + PADDING, BACKGROUND_COLOR);
+        int boxHeight = 0;
+        for (Setting setting : selectedModule.getSettings().values()) {
+            boxHeight += setting.getHeight();
+        }
+        drawBox(x, y, WIDTH, boxHeight + PADDING, BACKGROUND_COLOR);
 
         int yOffset = PADDING;
-        for (Setting s : selectedModule.getSettings().values()) {
-            s.draw(x, y + yOffset);
-            yOffset += ENTRY_HEIGHT;
+        for (Setting setting : selectedModule.getSettings().values()) {
+            setting.draw(x, y + yOffset);
+            yOffset += setting.getHeight();
         }
     }
 

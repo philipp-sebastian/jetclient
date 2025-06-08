@@ -14,4 +14,6 @@ public abstract class Setting {
     public abstract void handleClick(int mouseX, int mouseY);
 
     public abstract void draw(int x, int y);
+
+    public abstract int getHeight();
 }

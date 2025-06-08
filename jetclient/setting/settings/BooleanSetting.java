@@ -29,4 +29,9 @@ public class BooleanSetting extends Setting {
         int color = getActive() ? Panel.getActiveColor() : Panel.getInactiveColor();
         Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.getName(), x, y, color);
     }
+
+    @Override
+    public int getHeight() {
+        return Panel.getEntryHeight();
+    }
 }
