@@ -124,11 +124,11 @@ public class Panel {
 
         int settingY = y + PADDING + ENTRY_HEIGHT * (modules.indexOf(selectedModule) + 1) + PADDING;
         for (Setting setting : selectedModule.getSettings().values()) {
-            if (isInBox(mouseX, mouseY, x + WIDTH + 5, settingY, WIDTH, setting.getHeight())) {
+            if (isInBox(mouseX, mouseY, x + WIDTH + 5, settingY, WIDTH, (setting.getHeight() * Panel.getEntryHeight()))) {
                 setting.handleClick(mouseX, mouseY);
                 return;
             }
-            settingY += setting.getHeight();
+            settingY += (setting.getHeight() * Panel.getEntryHeight());
         }
     }
 
@@ -158,14 +158,14 @@ public class Panel {
     private void drawModuleSettings(Module selectedModule, int x, int y) {
         int boxHeight = 0;
         for (Setting setting : selectedModule.getSettings().values()) {
-            boxHeight += setting.getHeight();
+            boxHeight += (setting.getHeight() * Panel.getEntryHeight());
         }
         drawBox(x, y, WIDTH, boxHeight + PADDING, BACKGROUND_COLOR);
 
         int yOffset = PADDING;
         for (Setting setting : selectedModule.getSettings().values()) {
             setting.draw(x, y + yOffset);
-            yOffset += setting.getHeight();
+            yOffset += (setting.getHeight() * Panel.getEntryHeight());
         }
     }
 

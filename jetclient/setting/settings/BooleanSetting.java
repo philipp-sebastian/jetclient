@@ -5,33 +5,33 @@ import dev.jetclient.setting.Setting;
 import net.minecraft.client.Minecraft;
 
 public class BooleanSetting extends Setting {
-    private boolean active = false;
+    private boolean value = false;
 
     public BooleanSetting(String name) {
         super(name);
     }
 
-    public boolean getActive() {
-        return this.active;
+    public boolean getValue() {
+        return this.value;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
+    public void setValue(boolean value) {
+        this.value = value;
     }
 
     @Override
     public void handleClick(int mouseX, int mouseY) {
-        setActive(!getActive());
+        setValue(!getValue());
     }
 
     @Override
     public void draw(int x, int y) {
-        int color = getActive() ? Panel.getActiveColor() : Panel.getInactiveColor();
+        int color = getValue() ? Panel.getActiveColor() : Panel.getInactiveColor();
         Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.getName(), x, y, color);
     }
 
     @Override
     public int getHeight() {
-        return Panel.getEntryHeight();
+        return 1;
     }
 }

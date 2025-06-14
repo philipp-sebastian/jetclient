@@ -10,8 +10,7 @@ import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraft.item.ItemStack;
 import org.lwjgl.input.Keyboard;
-
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class ChestStealer extends Module {
     private final DelayCalculator delayCalculator;
@@ -22,7 +21,7 @@ public class ChestStealer extends Module {
     private static final int EXTRA_VARIANCE = 75;
 
     public ChestStealer(DelayCalculator delayCalculator) {
-        super("ChestStealer", Keyboard.KEY_NONE, Category.PLAYER, new HashMap<String, Setting>() {{
+        super("ChestStealer", Keyboard.KEY_NONE, Category.PLAYER, new LinkedHashMap<String, Setting>() {{
             put("Mode", new BooleanSetting("Mode"));
             put("Test", new BooleanSetting("Test"));
             put("Foo", new BooleanSetting("Foo"));

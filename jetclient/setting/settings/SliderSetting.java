@@ -38,6 +38,6 @@ public class SliderSetting extends Setting {
 
     @Override
     public int getHeight() {
-        return 2 * Panel.getEntryHeight();
+        return 2;
     }
 }
