@@ -28,7 +28,7 @@ public class ChangeKeybind extends Command {
             return;
         }
 
-        Module module = moduleManager.getModuleByName(moduleName);
+        Module module = moduleManager.getModule(moduleName);
         if (module == null) {
             this.printMessage("Invalid module");
             return;

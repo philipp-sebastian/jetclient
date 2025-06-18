@@ -67,7 +67,7 @@ public class Panel {
         int currentY = y + PADDING + ENTRY_HEIGHT;
 
         for (Module m : modules) {
-            int color = moduleManager.isModuleActive(m.getName()) ? ACTIVE_COLOR : INACTIVE_COLOR;
+            int color = moduleManager.isModuleActive(m.getClass()) ? ACTIVE_COLOR : INACTIVE_COLOR;
             drawText(m.getName(), x + PADDING, currentY, color);
             currentY += ENTRY_HEIGHT;
         }

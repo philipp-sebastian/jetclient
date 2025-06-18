@@ -3,6 +3,7 @@ package dev.jetclient.hud.items;
 import dev.jetclient.hud.HudItem;
 import dev.jetclient.module.Module;
 import dev.jetclient.module.ModuleManager;
+import dev.jetclient.module.modules.Hud;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 
@@ -17,13 +18,11 @@ public class ModuleList extends HudItem {
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
         int yOffset = 1;
 
-        Module hudModule = moduleManager.getModuleByName("Hud");
+        for (Module module : moduleManager.getActiveModules()) {
+            if (module instanceof Hud) continue;
 
-        for (Module m : moduleManager.getActiveModules()) {
-            if (hudModule != null && m.getName().equals(hudModule.getName())) continue;
-
-            int xOffset = sr.getScaledWidth() - Minecraft.getMinecraft().fontRendererObj.getStringWidth(m.getName()) - 1;
-            Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(m.getName(), xOffset, yOffset, 0xFFFFFF);
+            int xOffset = sr.getScaledWidth() - Minecraft.getMinecraft().fontRendererObj.getStringWidth(module.getName()) - 1;
+            Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(module.getName(), xOffset, yOffset, 0xFFFFFF);
             yOffset += 10;
         }
     }

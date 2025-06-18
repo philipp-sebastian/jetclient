@@ -26,11 +26,18 @@ public class ModuleManager {
         }
     }
 
-    public Module getModuleByName(String module) {
-        for (Module m : modules) {
-            if (m.getName().equalsIgnoreCase(module)) {
-                return m;
+    public <T extends Module> T getModule(Class<T> module) {
+        if (module != null) {
+            for (Module m : modules) {
+               if (module.isInstance(m)) return module.cast(m);
             }
+        }
+        return null;
+    }
+
+    public Module getModule(String module) {
+        for (Module m : modules) {
+            if (m.getName().equals(module)) return m;
         }
         return null;
     }
@@ -63,12 +70,10 @@ public class ModuleManager {
         return modulesByCategory;
     }
 
-    public boolean isModuleActive(String module) {
-        if (module == null) return false;
-
-        for (Module m : activeModules) {
-            if (m.getName().equals(module)) {
-                return true;
+    public boolean isModuleActive(Class<? extends Module> module) {
+        if (module != null) {
+            for (Module activeModule : activeModules) {
+                if (module.isInstance(activeModule)) return true;
             }
         }
         return false;
