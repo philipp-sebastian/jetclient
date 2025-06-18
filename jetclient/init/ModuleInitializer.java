@@ -15,6 +15,7 @@ public class ModuleInitializer {
         modules.add(new ChestStealer(delayCalculator));
         modules.add(new Hud());
         modules.add(new KillAura(delayCalculator));
+        modules.add(new ChestESP());
 
         return modules;
     }

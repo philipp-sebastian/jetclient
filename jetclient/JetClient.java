@@ -12,6 +12,7 @@ import dev.jetclient.utils.MessagePrinter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiIngame;
+import net.minecraft.client.renderer.RenderGlobal;
 
 public class JetClient {
     private static GuiScreenManager guiScreenManager;
@@ -52,4 +53,6 @@ public class JetClient {
     public static void injectDependencies(GuiChat guiChat) {
         guiChat.setCommandManager(commandManager);
     }
+
+    public static void injectDependencies(RenderGlobal renderGlobal) { renderGlobal.setModuleManager(moduleManager); }
 }

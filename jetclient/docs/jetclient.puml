@@ -5,6 +5,7 @@ class Minecraft
 class GuiScreen
 class GuiChat
 class GuiIngame
+class RenderGlobal
 }
 
 namespace command {
@@ -153,6 +154,7 @@ class MessagePrinter {
 
 Minecraft ..> ModuleManager
 Minecraft ..> KeybindHandler
+RenderGlobal ..> ModuleManager
 GuiChat ..> CommandManager
 GuiIngame ..> HudItemManager
 GuiScreenManager ..> "*" GuiScreen
