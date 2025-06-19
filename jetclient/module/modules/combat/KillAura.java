@@ -1,7 +1,8 @@
-package dev.jetclient.module.modules;
+package dev.jetclient.module.modules.combat;
 
 import dev.jetclient.module.Category;
 import dev.jetclient.module.Module;
+import dev.jetclient.module.type.RuntimeModule;
 import dev.jetclient.setting.Setting;
 import dev.jetclient.setting.settings.BooleanSetting;
 import dev.jetclient.setting.settings.InfoSetting;
@@ -19,7 +20,7 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.*;
 
-public class KillAura extends Module {
+public class KillAura extends RuntimeModule {
     private final DelayCalculator delayCalculator;
     private final SliderSetting blockRange;
     private final SliderSetting attackSpeed;
@@ -50,12 +51,6 @@ public class KillAura extends Module {
         this.mobTarget = (BooleanSetting) this.getSettings().get("mobTarget");
         this.random = new Random();
     }
-
-    @Override
-    public void onEnable() {}
-
-    @Override
-    public void onDisable() {}
 
     @Override
     public void onUpdate() {

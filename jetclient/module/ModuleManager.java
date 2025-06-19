@@ -1,5 +1,9 @@
 package dev.jetclient.module;
 
+import dev.jetclient.module.type.Render2DModule;
+import dev.jetclient.module.type.RuntimeModule;
+import dev.jetclient.module.type.Render3DModule;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,18 +25,11 @@ public class ModuleManager {
     }
 
     public void onUpdate() {
-        for (Module m : activeModules) {
-            m.onUpdate();
-        }
-    }
-
-    public <T extends Module> T getModule(Class<T> module) {
-        if (module != null) {
-            for (Module m : modules) {
-               if (module.isInstance(m)) return module.cast(m);
+        for (Module activeModule : activeModules) {
+            if (activeModule instanceof RuntimeModule) {
+                ((RuntimeModule) activeModule).onUpdate();
             }
         }
-        return null;
     }
 
     public Module getModule(String module) {
@@ -50,14 +47,13 @@ public class ModuleManager {
         }
     }
 
-    public boolean handleKeyEvent(int keyCode) {
+    public void handleKeyEvent(int keyCode) {
         for (Module m : modules) {
             if (m.getKeyBind() == keyCode) {
                 toggleModule(m);
-                return true;
+                break;
             }
         }
-        return false;
     }
 
     public List<Module> getModulesByCategory(Category category) {
@@ -77,5 +73,21 @@ public class ModuleManager {
             }
         }
         return false;
+    }
+
+    public void onRender3D(float partialTicks) {
+        for (Module activeModule : activeModules) {
+            if (activeModule instanceof Render3DModule) {
+                ((Render3DModule) activeModule).onRender3D(partialTicks);
+            }
+        }
+    }
+
+    public void onRender2D() {
+        for (Module activeModule : activeModules) {
+            if (activeModule instanceof Render2DModule) {
+                ((Render2DModule) activeModule).onRender2D();
+            }
+        }
     }
 }

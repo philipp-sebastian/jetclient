@@ -3,8 +3,8 @@ package dev.jetclient.module;
 public enum Category {
     MOVEMENT,
     COMBAT,
-    RENDER,
+    WORLD,
     PLAYER,
     MISC,
-    HUD
+    OVERLAY
 }

@@ -1,7 +1,11 @@
 package dev.jetclient.init;
 
 import dev.jetclient.module.Module;
-import dev.jetclient.module.modules.*;
+import dev.jetclient.module.modules.combat.KillAura;
+import dev.jetclient.module.modules.movement.Sprint;
+import dev.jetclient.module.modules.movement.Step;
+import dev.jetclient.module.modules.player.ChestStealer;
+import dev.jetclient.module.modules.world.ChestESP;
 import dev.jetclient.utils.DelayCalculator;
 
 import java.util.ArrayList;
@@ -13,7 +17,6 @@ public class ModuleInitializer {
         modules.add(new Sprint());
         modules.add(new Step());
         modules.add(new ChestStealer(delayCalculator));
-        modules.add(new Hud());
         modules.add(new KillAura(delayCalculator));
         modules.add(new ChestESP());
 

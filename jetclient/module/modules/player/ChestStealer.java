@@ -1,7 +1,8 @@
-package dev.jetclient.module.modules;
+package dev.jetclient.module.modules.player;
 
 import dev.jetclient.module.Category;
 import dev.jetclient.module.Module;
+import dev.jetclient.module.type.RuntimeModule;
 import dev.jetclient.setting.Setting;
 import dev.jetclient.setting.settings.BooleanSetting;
 import dev.jetclient.setting.settings.SliderSetting;
@@ -12,7 +13,7 @@ import net.minecraft.item.ItemStack;
 import org.lwjgl.input.Keyboard;
 import java.util.LinkedHashMap;
 
-public class ChestStealer extends Module {
+public class ChestStealer extends RuntimeModule {
     private final DelayCalculator delayCalculator;
     private long lastStealTime = 0;
     private long delay = 0;
@@ -28,14 +29,6 @@ public class ChestStealer extends Module {
             put("Slider", new SliderSetting("Slider"));
         }});
         this.delayCalculator = delayCalculator;
-    }
-
-    @Override
-    public void onEnable() {
-    }
-
-    @Override
-    public void onDisable() {
     }
 
     @Override

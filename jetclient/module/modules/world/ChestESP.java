@@ -1,12 +1,11 @@
-package dev.jetclient.module.modules;
+package dev.jetclient.module.modules.world;
 
 import dev.jetclient.module.Category;
-import dev.jetclient.module.Module;
+import dev.jetclient.module.type.Render3DModule;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.culling.ICamera;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.AxisAlignedBB;
@@ -16,38 +15,19 @@ import org.lwjgl.opengl.GL11;
 
 import java.util.Collections;
 
-public class ChestESP extends Module {
+public class ChestESP extends Render3DModule {
     private final ICamera cameraFrustum;
 
     private static final double BLOCK_SIZE = 1.0;
 
     public ChestESP() {
-        super("ChestESP", Keyboard.KEY_NONE, Category.RENDER, Collections.emptyMap());
+        super("ChestESP", Keyboard.KEY_NONE, Category.WORLD, Collections.emptyMap());
 
         cameraFrustum = new Frustum();
     }
 
     @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
-
-    @Override
-    public void onUpdate() {
-
-        //annahme kiste ist bei 100, 54, 2
-        //minecraft rendert aber immer relativ zur kamera
-        //partialTicks ist der Anteil des aktuellen Frames zwischen zwei Ticks – für flüssiges Rendering.zwischen 0.0f und BLOCK_SIZEf
-
-    }
-
-
-    public void onRender(float partialTicks) {
+    public void onRender3D(float partialTicks) {
         RenderManager rm = Minecraft.getMinecraft().getRenderManager();
         double camX = rm.viewerPosX;
         double camY = rm.viewerPosY;

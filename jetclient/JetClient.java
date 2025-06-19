@@ -3,9 +3,9 @@ package dev.jetclient;
 import dev.jetclient.command.CommandManager;
 import dev.jetclient.gui.GuiScreenManager;
 import dev.jetclient.gui.screens.modulegui.PanelManager;
-import dev.jetclient.hud.HudItemManager;
+import dev.jetclient.overlay.OverlayElementManager;
 import dev.jetclient.init.*;
-import dev.jetclient.keybinds.KeybindHandler;
+import dev.jetclient.keybind.KeybindHandler;
 import dev.jetclient.module.ModuleManager;
 import dev.jetclient.utils.DelayCalculator;
 import dev.jetclient.utils.MessagePrinter;
@@ -18,7 +18,7 @@ public class JetClient {
     private static GuiScreenManager guiScreenManager;
     private static ModuleManager moduleManager;
     private static KeybindHandler keybindHandler;
-    private static HudItemManager hudItemManager;
+    private static OverlayElementManager overlayElementManager;
     private static CommandManager commandManager;
     private static PanelManager panelManager;
     private static MessagePrinter messagePrinter;
@@ -36,7 +36,7 @@ public class JetClient {
         panelManager = new PanelManager(PanelInitializer.createPanels(moduleManager));
         guiScreenManager = new GuiScreenManager(GuiScreenInitializer.createGuiScreens(panelManager));
         keybindHandler = new KeybindHandler(moduleManager, guiScreenManager);
-        hudItemManager = new HudItemManager(HudItemInitializer.createHudItems(moduleManager));
+        overlayElementManager = new OverlayElementManager(OverlayElementInitializer.createOverlayElements(moduleManager));
         messagePrinter = new MessagePrinter();
         commandManager = new CommandManager(CommandInitializer.createCommands(moduleManager, messagePrinter));
     }
@@ -47,7 +47,8 @@ public class JetClient {
     }
 
     public static void injectDependencies(GuiIngame guiIngame) {
-        guiIngame.setHudItemManager(hudItemManager);
+        guiIngame.setOverlayElementManager(overlayElementManager);
+        guiIngame.setModuleManager(moduleManager);
     }
 
     public static void injectDependencies(GuiChat guiChat) {

@@ -1,4 +1,4 @@
-package dev.jetclient.keybinds;
+package dev.jetclient.keybind;
 
 import dev.jetclient.gui.GuiScreenManager;
 import dev.jetclient.module.ModuleManager;

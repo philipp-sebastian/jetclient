@@ -67,20 +67,19 @@ class HotkeyScreen {
 }
 }
 
-namespace hud {
-class HudItem {
-    + renderItem()
-    + shouldRender()
+namespace overlay {
+class OverlayElement {
+    + onRender2D()
 }
 
-namespace items {
+namespace elements {
 class ModuleList {
-    + renderItem()
+    + onRender2D()
 }
 }
 
-class HudItemManager {
-    + renderItems()
+class OverlayElementManager {
+    + onRender2D()
 }
 }
 
@@ -102,11 +101,35 @@ class Module {
     + onUpdate()
 }
 
+namespace type {
+class Render3DModule {
+    + onRender3D(float partialTicks)
+}
+
+class OverlayModule {
+    + onRender2D()
+}
+
+class RuntimeModule {
+    + onUpdate()
+    + onEnable()
+    + onDisable()
+}
+}
+
 namespace modules {
+namespace player {
 class ChestStealer {
     + onEnable()
     + onDisable()
     + onUpdate()
+}
+}
+
+namespace world {
+class ChestESP {
+    + onRender3D(float partialTicks)
+}
 }
 }
 
@@ -118,12 +141,14 @@ class ModuleManager {
     + getModuleByName(String module)
     + toggleModule(Module module)
     + getModulesByCategory()
+    + onRender3D(float partialTicks)
     + isModuleActive(String module)
 }
 
 enum Category {
     PLAYER
-    RENDER
+    WORLD
+    COMBAT
     MOVEMENT
 }
 }
@@ -156,7 +181,8 @@ Minecraft ..> ModuleManager
 Minecraft ..> KeybindHandler
 RenderGlobal ..> ModuleManager
 GuiChat ..> CommandManager
-GuiIngame ..> HudItemManager
+GuiIngame ..> OverlayElementManager
+GuiIngame ..> ModuleManager
 GuiScreenManager ..> "*" GuiScreen
 ModuleGui ..|> HotkeyScreen
 HotkeyScreen ..|> GuiScreen
@@ -164,6 +190,9 @@ AltLogin ..|> GuiScreen
 ModuleManager ..> "*" Module
 Module ..> Category
 Module ..> "*" Setting
+Render3DModule ..|> Module
+RuntimeModule ..|> Module
+OverlayModule ..|> Module
 KeybindHandler ..> ModuleManager
 KeybindHandler ..> GuiScreenManager
 Panel ..> "*" Module
@@ -171,14 +200,15 @@ Panel ..> Category
 ModuleGui ..> PanelManager
 PanelManager ..> "*" Panel
 Panel ..> ModuleManager
-HudItem ..> ModuleManager
-HudItemManager ..> "*" HudItem
+OverlayElement ..> ModuleManager
+OverlayElementManager ..> "*" OverlayElement
 CommandManager ..> "*" Command
 Command ..> ModuleManager
 Command ..> MessagePrinter
 ChangeKeybind ..|> Command
-ModuleList ..|> HudItem
-ChestStealer ..|> Module
+ModuleList ..|> OverlayElement
+ChestStealer ..|> RuntimeModule
+ChestESP ..|> Render3DModule
 SliderSetting ..|> Setting
 
 @enduml

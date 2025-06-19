@@ -1,13 +1,14 @@
-package dev.jetclient.module.modules;
+package dev.jetclient.module.modules.movement;
 
 import dev.jetclient.module.Category;
 import dev.jetclient.module.Module;
+import dev.jetclient.module.type.RuntimeModule;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
 
 import java.util.Collections;
 
-public class Step extends Module {
+public class Step extends RuntimeModule {
     private float stepHeight;
 
     public Step() {

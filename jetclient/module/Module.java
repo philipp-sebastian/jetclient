@@ -1,5 +1,6 @@
 package dev.jetclient.module;
 
+import dev.jetclient.module.Category;
 import dev.jetclient.setting.Setting;
 import net.minecraft.client.Minecraft;
 
@@ -39,10 +40,4 @@ public abstract class Module {
     public Map<String, Setting> getSettings() {
         return this.settings;
     }
-
-    public abstract void onEnable();
-
-    public abstract void onDisable();
-
-    public abstract void onUpdate();
 }

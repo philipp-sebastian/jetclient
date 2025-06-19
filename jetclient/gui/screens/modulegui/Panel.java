@@ -8,7 +8,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 
 import java.util.List;
-import java.util.Map;
 
 public class Panel {
     private static final int WIDTH = 100;
