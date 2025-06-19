@@ -106,7 +106,7 @@ class Render3DModule {
     + onRender3D(float partialTicks)
 }
 
-class OverlayModule {
+class Render2DModule {
     + onRender2D()
 }
 
@@ -192,7 +192,7 @@ Module ..> Category
 Module ..> "*" Setting
 Render3DModule ..|> Module
 RuntimeModule ..|> Module
-OverlayModule ..|> Module
+Render2DModule ..|> Module
 KeybindHandler ..> ModuleManager
 KeybindHandler ..> GuiScreenManager
 Panel ..> "*" Module
