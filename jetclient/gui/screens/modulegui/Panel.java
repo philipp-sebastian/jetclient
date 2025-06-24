@@ -30,6 +30,9 @@ public class Panel {
     private boolean showSettings = false;
     private Module selectedModule = null;
 
+    private int animationHeight = 0;
+    private long lastAnimationTime = 0;
+
     public Panel(ModuleManager moduleManager, Category category, int x, int y) {
         this.moduleManager = moduleManager;
         this.category = category;
@@ -42,10 +45,10 @@ public class Panel {
     public void drawScreen(int mouseX, int mouseY) {
         updateDrag(mouseX, mouseY);
         drawPanelBackground();
+        updateAnimationHeight();
         drawCategoryTitle();
 
         if (!showModules) return;
-
         drawModules();
 
         if (showSettings && selectedModule != null) {
@@ -54,8 +57,15 @@ public class Panel {
     }
 
     private void drawPanelBackground() {
-        int height = ENTRY_HEIGHT + PADDING + (showModules ? modules.size() * ENTRY_HEIGHT : 0);
-        drawBox(x, y, WIDTH, height, BACKGROUND_COLOR);
+        drawBox(x, y, WIDTH, ENTRY_HEIGHT + PADDING + (showModules ? animationHeight : 0), BACKGROUND_COLOR);
+    }
+
+    private void updateAnimationHeight() {
+        /* TODO: Adjust animation-speed in settings */
+        if (showModules && animationHeight < (modules.size() * ENTRY_HEIGHT) && (System.currentTimeMillis() - lastAnimationTime) > 10) {
+            lastAnimationTime = System.currentTimeMillis();
+            animationHeight++;
+        }
     }
 
     private void drawCategoryTitle() {
@@ -64,11 +74,14 @@ public class Panel {
 
     private void drawModules() {
         int currentY = y + PADDING + ENTRY_HEIGHT;
+        int counter = 1;
 
-        for (Module m : modules) {
-            int color = moduleManager.isModuleActive(m.getClass()) ? ACTIVE_COLOR : INACTIVE_COLOR;
-            drawText(m.getName(), x + PADDING, currentY, color);
+        for (Module module : modules) {
+            if (animationHeight < counter * ENTRY_HEIGHT) break;
+
+            drawText(module.getName(), x + PADDING, currentY, moduleManager.isModuleActive(module.getClass()) ? ACTIVE_COLOR : INACTIVE_COLOR);
             currentY += ENTRY_HEIGHT;
+            counter++;
         }
     }
 
@@ -87,6 +100,10 @@ public class Panel {
                 dragOffsetY = mouseY - y;
             } else if (mouseButton == 1) {
                 showModules = !showModules;
+                if (!showModules) {
+                    animationHeight = 0;
+                    lastAnimationTime = 0;
+                }
                 selectedModule = null;
                 showSettings = false;
             }
@@ -117,7 +134,6 @@ public class Panel {
         return false;
     }
 
-    //old
     private void handleSettingClick(int mouseX, int mouseY) {
         if (!showSettings || selectedModule == null) return;
 
@@ -146,8 +162,8 @@ public class Panel {
         if (state == 0) dragging = false;
     }
 
-    private void drawBox(int x, int y, int width, int heigth, int color) {
-        Gui.drawRect(x, y, x + width, y + heigth, color);
+    private void drawBox(int x, int y, int width, int height, int color) {
+        Gui.drawRect(x, y, x + width, y + height, color);
     }
 
     private void drawText(String text, int x, int y, int color) {
