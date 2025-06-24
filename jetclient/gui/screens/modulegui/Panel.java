@@ -47,8 +47,6 @@ public class Panel {
         drawPanelBackground();
         updateAnimationHeight();
         drawCategoryTitle();
-
-        if (!showModules) return;
         drawModules();
 
         if (showSettings && selectedModule != null) {
@@ -57,7 +55,7 @@ public class Panel {
     }
 
     private void drawPanelBackground() {
-        drawBox(x, y, WIDTH, ENTRY_HEIGHT + PADDING + (showModules ? animationHeight : 0), BACKGROUND_COLOR);
+        drawBox(x, y, WIDTH, ENTRY_HEIGHT + PADDING + animationHeight, BACKGROUND_COLOR);
     }
 
     private void updateAnimationHeight() {
@@ -65,6 +63,12 @@ public class Panel {
         if (showModules && animationHeight < (modules.size() * ENTRY_HEIGHT) && (System.currentTimeMillis() - lastAnimationTime) > 10) {
             lastAnimationTime = System.currentTimeMillis();
             animationHeight++;
+            return;
+        }
+
+        if (!showModules && animationHeight > 0 && (System.currentTimeMillis() - lastAnimationTime) > 10) {
+            lastAnimationTime = System.currentTimeMillis();
+            animationHeight--;
         }
     }
 
@@ -73,16 +77,16 @@ public class Panel {
     }
 
     private void drawModules() {
-        int currentY = y + PADDING + ENTRY_HEIGHT;
-        int counter = 1;
+            int currentY = y + PADDING + ENTRY_HEIGHT;
+            int counter = 1;
 
-        for (Module module : modules) {
-            if (animationHeight < counter * ENTRY_HEIGHT) break;
+            for (Module module : modules) {
+                if (animationHeight < counter * ENTRY_HEIGHT) break;
 
-            drawText(module.getName(), x + PADDING, currentY, moduleManager.isModuleActive(module.getClass()) ? ACTIVE_COLOR : INACTIVE_COLOR);
-            currentY += ENTRY_HEIGHT;
-            counter++;
-        }
+                drawText(module.getName(), x + PADDING, currentY, moduleManager.isModuleActive(module.getClass()) ? ACTIVE_COLOR : INACTIVE_COLOR);
+                currentY += ENTRY_HEIGHT;
+                counter++;
+            }
     }
 
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
@@ -101,7 +105,6 @@ public class Panel {
             } else if (mouseButton == 1) {
                 showModules = !showModules;
                 if (!showModules) {
-                    animationHeight = 0;
                     lastAnimationTime = 0;
                 }
                 selectedModule = null;
