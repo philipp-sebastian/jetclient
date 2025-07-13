@@ -10,25 +10,16 @@ public class OverlayElementManager {
     }
 
     public void toggleOverlayElement(OverlayElement overlayElement) {
-        if (overlayElement != null) overlayElement.setActive(!overlayElement.getActive());
+        if (overlayElement != null) overlayElement.setActive(!overlayElement.isActive());
     }
 
-    public <T extends OverlayElement> T getOverlayElement(Class<T> clazz) {
-        for (OverlayElement element : overlayElements) {
-            if (clazz.isInstance(element)) {
-                return clazz.cast(element);
-            }
-        }
-        return null;
-    }
-
-    public boolean isOverlayElementActive(OverlayElement overlayElement) {
-        return overlayElement != null && overlayElement.getActive();
+    public List<OverlayElement> getOverlayElements() {
+        return this.overlayElements;
     }
 
     public void onRender2D() {
         for (OverlayElement overlayElement : overlayElements) {
-            if (overlayElement.getActive()) overlayElement.onRender2D();
+            if (overlayElement.isActive()) overlayElement.onRender2D();
         }
     }
 }

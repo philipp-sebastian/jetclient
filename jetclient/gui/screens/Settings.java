@@ -1,48 +1,64 @@
 package dev.jetclient.gui.screens;
 
 import dev.jetclient.JetClient;
+import dev.jetclient.overlay.OverlayElement;
 import dev.jetclient.overlay.OverlayElementManager;
-import dev.jetclient.overlay.elements.ModuleList;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 
 import java.io.IOException;
+import java.util.List;
 
 public class Settings extends GuiScreen {
     private final GuiScreen parentScreen;
     private final OverlayElementManager overlayElementManager;
-    private final ModuleList moduleList;
+
+    private static final int DONE_BUTTON_ID = 999;
 
     public Settings(GuiScreen parentScreenIn, OverlayElementManager overlayElementManager) {
         this.parentScreen = parentScreenIn;
         this.overlayElementManager = overlayElementManager;
-        this.moduleList = overlayElementManager.getOverlayElement(ModuleList.class);
     }
 
     @Override
     public void initGui() {
         this.buttonList.clear();
-        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 24, getModuleListButtonText()));
-        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 48, "Done"));
-        super.initGui();
+
+        int index = 0;
+        for (OverlayElement overlayElement : overlayElementManager.getOverlayElements()) {
+            this.buttonList.add(new GuiButton(index, this.width / 2 - 100, this.height / 4 + index * 24, 200, 20, getButtonText(overlayElement)));
+            index++;
+        }
+        this.buttonList.add(new GuiButton(DONE_BUTTON_ID, this.width / 2 - 100, this.height / 6 + 168, 200, 20, "Done"));
     }
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         this.drawDefaultBackground();
-        this.drawCenteredString(this.fontRendererObj, JetClient.getClientName() + " Settings", this.width / 2, 20, 16777215);
-        this.buttonList.get(0).displayString = getModuleListButtonText();
+        this.drawCenteredString(this.fontRendererObj, JetClient.getClientName() + " Settings", this.width / 2, 20, 0xFFFFFFFF);
+
+        List<OverlayElement> elements = overlayElementManager.getOverlayElements();
+        for (int i = 0; i < elements.size(); i++) {
+            this.buttonList.get(i).displayString = getButtonText(elements.get(i));
+        }
+
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
     @Override
     protected void actionPerformed(GuiButton button) throws IOException {
-        if (button.id == 0 && moduleList != null) overlayElementManager.toggleOverlayElement(moduleList);
-        if (button.id == 1) this.mc.displayGuiScreen(parentScreen);
-        super.actionPerformed(button);
+        if (button.id == DONE_BUTTON_ID) {
+            this.mc.displayGuiScreen(parentScreen);
+            return;
+        }
+
+        List<OverlayElement> elements = overlayElementManager.getOverlayElements();
+        if (button.id >= 0 && button.id < elements.size()) {
+            overlayElementManager.toggleOverlayElement(elements.get(button.id));
+        }
     }
 
-    private String getModuleListButtonText() {
-        return "Module List: " + ((overlayElementManager.isOverlayElementActive(moduleList)) ? "true" : "false");
+    private String getButtonText(OverlayElement overlayElement) {
+        return overlayElement.getName() + ": " + ((overlayElement.isActive()) ? "On" : "Off");
     }
 }

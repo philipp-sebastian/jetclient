@@ -36,13 +36,17 @@ public class JetClient {
         panelManager = new PanelManager(PanelInitializer.createPanels(moduleManager));
         guiScreenManager = new GuiScreenManager(GuiScreenInitializer.createGuiScreens(panelManager));
         keybindHandler = new KeybindHandler(moduleManager, guiScreenManager);
-        overlayElementManager = new OverlayElementManager(OverlayElementInitializer.createOverlayElements(moduleManager));
+        overlayElementManager = new OverlayElementManager(OverlayElementInitializer.createOverlayElements());
         messagePrinter = new MessagePrinter();
         commandManager = new CommandManager(CommandInitializer.createCommands(moduleManager, messagePrinter));
     }
 
     public static OverlayElementManager getOverlayElementManager() {
         return overlayElementManager;
+    }
+
+    public static ModuleManager getModuleManager() {
+        return moduleManager;
     }
 
     public static void injectDependencies(Minecraft mc) {

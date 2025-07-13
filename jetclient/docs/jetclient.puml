@@ -55,6 +55,10 @@ class ModuleGui {
 class AltLogin {
     + drawScreen(int mouseX, int mouseY, float partialTicks)
 }
+
+class Settings {
+    + drawScreen(int mouseX, int mouseY, float partialTicks)
+}
 }
 
 class GuiScreenManager {
@@ -186,6 +190,8 @@ GuiIngame ..> ModuleManager
 GuiScreenManager ..> "*" GuiScreen
 ModuleGui ..|> HotkeyScreen
 HotkeyScreen ..|> GuiScreen
+Settings ..|> GuiScreen
+Settings ..> OverlayElementManager
 AltLogin ..|> GuiScreen
 ModuleManager ..> "*" Module
 Module ..> Category

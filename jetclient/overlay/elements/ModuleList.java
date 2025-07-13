@@ -1,5 +1,6 @@
 package dev.jetclient.overlay.elements;
 
+import dev.jetclient.JetClient;
 import dev.jetclient.overlay.OverlayElement;
 import dev.jetclient.module.Module;
 import dev.jetclient.module.ModuleManager;
@@ -8,8 +9,8 @@ import net.minecraft.client.gui.ScaledResolution;
 
 public class ModuleList extends OverlayElement {
 
-    public ModuleList(ModuleManager moduleManager) {
-        super(moduleManager);
+    public ModuleList() {
+        super(JetClient.getModuleManager(), "Module List");
     }
 
     @Override

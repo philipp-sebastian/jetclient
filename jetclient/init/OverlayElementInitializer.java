@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OverlayElementInitializer {
-    public static List<OverlayElement> createOverlayElements(ModuleManager moduleManager) {
+    public static List<OverlayElement> createOverlayElements() {
         List<OverlayElement> overlayElements = new ArrayList<>();
-        overlayElements.add(new ModuleList(moduleManager));
+        overlayElements.add(new ModuleList());
 
         return overlayElements;
     }
