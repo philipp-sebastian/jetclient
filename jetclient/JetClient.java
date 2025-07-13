@@ -41,6 +41,10 @@ public class JetClient {
         commandManager = new CommandManager(CommandInitializer.createCommands(moduleManager, messagePrinter));
     }
 
+    public static OverlayElementManager getOverlayElementManager() {
+        return overlayElementManager;
+    }
+
     public static void injectDependencies(Minecraft mc) {
         mc.setModuleManager(moduleManager);
         mc.setKeybindHandler(keybindHandler);
