@@ -105,6 +105,24 @@ class Module {
     + onUpdate()
 }
 
+namespace setting {
+class Setting {
+    + getActive()
+    + setActive(boolean active)
+    + getName()
+    + handleClick(int mouseX, int mouseY)
+    + draw(int x, int y)
+}
+
+namespace settings {
+class SliderSetting {
+    + handleClick(int mouseX, int mouseY)
+    + draw(int x, int y)
+    + getSliderVal()
+}
+}
+}
+
 namespace type {
 class Render3DModule {
     + onRender3D(float partialTicks)
@@ -154,24 +172,6 @@ enum Category {
     WORLD
     COMBAT
     MOVEMENT
-}
-}
-
-namespace setting {
-class Setting {
-    + getActive()
-    + setActive(boolean active)
-    + getName()
-    + handleClick(int mouseX, int mouseY)
-    + draw(int x, int y)
-}
-
-namespace settings {
-class SliderSetting {
-    + handleClick(int mouseX, int mouseY)
-    + draw(int x, int y)
-    + getSliderVal()
-}
 }
 }
 

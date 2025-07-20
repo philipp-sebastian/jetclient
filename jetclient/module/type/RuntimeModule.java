@@ -2,7 +2,7 @@ package dev.jetclient.module.type;
 
 import dev.jetclient.module.Category;
 import dev.jetclient.module.Module;
-import dev.jetclient.setting.Setting;
+import dev.jetclient.module.setting.Setting;
 
 import java.util.Map;
 

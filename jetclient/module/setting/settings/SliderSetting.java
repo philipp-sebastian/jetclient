@@ -1,7 +1,7 @@
-package dev.jetclient.setting.settings;
+package dev.jetclient.module.setting.settings;
 
 import dev.jetclient.gui.screens.modulegui.Panel;
-import dev.jetclient.setting.Setting;
+import dev.jetclient.module.setting.Setting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 

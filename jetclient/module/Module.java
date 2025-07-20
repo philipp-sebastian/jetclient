@@ -1,7 +1,6 @@
 package dev.jetclient.module;
 
-import dev.jetclient.module.Category;
-import dev.jetclient.setting.Setting;
+import dev.jetclient.module.setting.Setting;
 import net.minecraft.client.Minecraft;
 
 import java.util.Map;

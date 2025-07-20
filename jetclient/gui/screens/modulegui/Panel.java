@@ -3,7 +3,7 @@ package dev.jetclient.gui.screens.modulegui;
 import dev.jetclient.module.Category;
 import dev.jetclient.module.Module;
 import dev.jetclient.module.ModuleManager;
-import dev.jetclient.setting.Setting;
+import dev.jetclient.module.setting.Setting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 

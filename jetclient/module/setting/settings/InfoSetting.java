@@ -1,6 +1,6 @@
-package dev.jetclient.setting.settings;
+package dev.jetclient.module.setting.settings;
 
-import dev.jetclient.setting.Setting;
+import dev.jetclient.module.setting.Setting;
 import net.minecraft.client.Minecraft;
 
 public class InfoSetting extends Setting {

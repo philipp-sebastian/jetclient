@@ -1,12 +1,11 @@
 package dev.jetclient.module.modules.combat;
 
 import dev.jetclient.module.Category;
-import dev.jetclient.module.Module;
 import dev.jetclient.module.type.RuntimeModule;
-import dev.jetclient.setting.Setting;
-import dev.jetclient.setting.settings.BooleanSetting;
-import dev.jetclient.setting.settings.InfoSetting;
-import dev.jetclient.setting.settings.SliderSetting;
+import dev.jetclient.module.setting.Setting;
+import dev.jetclient.module.setting.settings.BooleanSetting;
+import dev.jetclient.module.setting.settings.InfoSetting;
+import dev.jetclient.module.setting.settings.SliderSetting;
 import dev.jetclient.utils.DelayCalculator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;

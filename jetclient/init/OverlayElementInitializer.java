@@ -2,7 +2,6 @@ package dev.jetclient.init;
 
 import dev.jetclient.overlay.OverlayElement;
 import dev.jetclient.overlay.elements.ModuleList;
-import dev.jetclient.module.ModuleManager;
 
 import java.util.ArrayList;
 import java.util.List;

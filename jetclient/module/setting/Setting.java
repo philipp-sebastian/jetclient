@@ -1,4 +1,4 @@
-package dev.jetclient.setting;
+package dev.jetclient.module.setting;
 
 public abstract class Setting {
     private final String name;

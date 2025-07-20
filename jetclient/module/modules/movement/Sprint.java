@@ -10,7 +10,7 @@ import java.util.Collections;
 public class Sprint extends RuntimeModule {
 
     public Sprint() {
-        super("Sprint", Keyboard.KEY_0, Category.MOVEMENT, Collections.emptyMap());
+        super("Sprint", Keyboard.KEY_NONE, Category.MOVEMENT, Collections.emptyMap());
     }
 
     @Override

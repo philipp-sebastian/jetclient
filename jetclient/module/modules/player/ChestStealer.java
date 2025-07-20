@@ -1,11 +1,10 @@
 package dev.jetclient.module.modules.player;
 
 import dev.jetclient.module.Category;
-import dev.jetclient.module.Module;
 import dev.jetclient.module.type.RuntimeModule;
-import dev.jetclient.setting.Setting;
-import dev.jetclient.setting.settings.BooleanSetting;
-import dev.jetclient.setting.settings.SliderSetting;
+import dev.jetclient.module.setting.Setting;
+import dev.jetclient.module.setting.settings.BooleanSetting;
+import dev.jetclient.module.setting.settings.SliderSetting;
 import dev.jetclient.utils.DelayCalculator;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.inventory.ContainerChest;

@@ -34,7 +34,7 @@ public class ChangeKeybind extends Command {
             return;
         }
 
-        module.setKeyBind(keyCode);
+        moduleManager.setKeyBind(module, keyCode);
         this.printMessage("Module: " + module.getName() + " bound to key: " + Keyboard.getKeyName(module.getKeyBind()));
     }
 }

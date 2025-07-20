@@ -1,12 +1,14 @@
 package dev.jetclient;
 
 import dev.jetclient.command.CommandManager;
+import dev.jetclient.config.ConfigFile;
 import dev.jetclient.gui.GuiScreenManager;
 import dev.jetclient.gui.screens.modulegui.PanelManager;
 import dev.jetclient.overlay.OverlayElementManager;
 import dev.jetclient.init.*;
 import dev.jetclient.keybind.KeybindHandler;
 import dev.jetclient.module.ModuleManager;
+import dev.jetclient.config.ConfigHandler;
 import dev.jetclient.utils.DelayCalculator;
 import dev.jetclient.utils.MessagePrinter;
 import net.minecraft.client.Minecraft;
@@ -23,6 +25,8 @@ public class JetClient {
     private static PanelManager panelManager;
     private static MessagePrinter messagePrinter;
     private static DelayCalculator delayCalculator;
+    private static ConfigFile configFile;
+    private static ConfigHandler configHandler;
 
     private final static String clientName = "Jet";
 
@@ -32,7 +36,8 @@ public class JetClient {
 
     public static void initialize() {
         delayCalculator = new DelayCalculator();
-        moduleManager = new ModuleManager(ModuleInitializer.createModules(delayCalculator));
+        configHandler = new ConfigHandler(new ConfigFile("config.txt"));
+        moduleManager = new ModuleManager(ModuleInitializer.createModules(delayCalculator), configHandler);
         panelManager = new PanelManager(PanelInitializer.createPanels(moduleManager));
         guiScreenManager = new GuiScreenManager(GuiScreenInitializer.createGuiScreens(panelManager));
         keybindHandler = new KeybindHandler(moduleManager, guiScreenManager);
