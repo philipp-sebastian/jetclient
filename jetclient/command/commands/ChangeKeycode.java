@@ -6,10 +6,10 @@ import dev.jetclient.module.ModuleManager;
 import dev.jetclient.utils.MessagePrinter;
 import org.lwjgl.input.Keyboard;
 
-public class ChangeKeybind extends Command {
+public class ChangeKeycode extends Command {
 
-    public ChangeKeybind(ModuleManager moduleManager, MessagePrinter messagePrinter) {
-        super(moduleManager, messagePrinter, "Change keybind", "bind", "bind <modulename> <key>");
+    public ChangeKeycode(ModuleManager moduleManager) {
+        super(moduleManager, "Change keycode", "bind", "bind <modulename> <key>");
     }
 
     @Override
@@ -34,7 +34,7 @@ public class ChangeKeybind extends Command {
             return;
         }
 
-        moduleManager.setKeyBind(module, keyCode);
-        this.printMessage("Module: " + module.getName() + " bound to key: " + Keyboard.getKeyName(module.getKeyBind()));
+        moduleManager.setKeyCode(module, keyCode);
+        this.printMessage("Module: " + module.getName() + " bound to key: " + Keyboard.getKeyName(module.getKeyCode()));
     }
 }

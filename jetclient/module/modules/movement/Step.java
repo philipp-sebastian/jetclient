@@ -12,7 +12,7 @@ public class Step extends RuntimeModule {
     private float stepHeight;
 
     public Step() {
-        super("Step", Keyboard.KEY_NONE, Category.MOVEMENT, Collections.emptyMap());
+        super("Step", Category.MOVEMENT, Collections.emptyMap());
     }
 
     @Override

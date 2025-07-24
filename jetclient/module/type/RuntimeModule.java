@@ -7,8 +7,8 @@ import dev.jetclient.module.setting.Setting;
 import java.util.Map;
 
 public abstract class RuntimeModule extends Module {
-    protected RuntimeModule(String name, int keyBind, Category category, Map<String, Setting> settings) {
-        super(name, keyBind, category, settings);
+    protected RuntimeModule(String name, Category category, Map<String, Setting> settings) {
+        super(name, category, settings);
     }
 
     public void onEnable() {}

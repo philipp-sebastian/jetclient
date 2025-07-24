@@ -10,8 +10,8 @@ import java.util.function.Supplier;
 public class ShowCommands extends Command {
     private final Supplier<List<Command>> commandSupplier;
 
-    public ShowCommands(ModuleManager moduleManager, MessagePrinter messagePrinter, Supplier<List<Command>> commandSupplier) {
-        super(moduleManager, messagePrinter, "Show commands", "commands", "commands");
+    public ShowCommands(ModuleManager moduleManager, Supplier<List<Command>> commandSupplier) {
+        super(moduleManager, "Show commands", "commands", "commands");
 
         this.commandSupplier = commandSupplier;
     }

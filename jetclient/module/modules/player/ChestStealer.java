@@ -13,21 +13,19 @@ import org.lwjgl.input.Keyboard;
 import java.util.LinkedHashMap;
 
 public class ChestStealer extends RuntimeModule {
-    private final DelayCalculator delayCalculator;
     private long lastStealTime = 0;
     private long delay = 0;
 
     private static final int MAX_DELAY = 500;
     private static final int EXTRA_VARIANCE = 75;
 
-    public ChestStealer(DelayCalculator delayCalculator) {
-        super("ChestStealer", Keyboard.KEY_NONE, Category.PLAYER, new LinkedHashMap<String, Setting>() {{
+    public ChestStealer() {
+        super("ChestStealer", Category.PLAYER, new LinkedHashMap<String, Setting>() {{
             put("Mode", new BooleanSetting("Mode"));
             put("Test", new BooleanSetting("Test"));
             put("Foo", new BooleanSetting("Foo"));
             put("Slider", new SliderSetting("Slider"));
         }});
-        this.delayCalculator = delayCalculator;
     }
 
     @Override
@@ -56,7 +54,7 @@ public class ChestStealer extends RuntimeModule {
 
                 lastStealTime = System.currentTimeMillis();
                 SliderSetting sliderSetting = (SliderSetting) getSettings().get("Slider");
-                delay = delayCalculator.calculateDelay(sliderSetting.getSliderVal(), MAX_DELAY, EXTRA_VARIANCE);
+                delay = DelayCalculator.calculateDelay(sliderSetting.getSliderVal(), MAX_DELAY, EXTRA_VARIANCE);
                 return;
             }
         }

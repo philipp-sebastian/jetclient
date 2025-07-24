@@ -23,9 +23,6 @@ public class JetClient {
     private static OverlayElementManager overlayElementManager;
     private static CommandManager commandManager;
     private static PanelManager panelManager;
-    private static MessagePrinter messagePrinter;
-    private static DelayCalculator delayCalculator;
-    private static ConfigFile configFile;
     private static ConfigHandler configHandler;
 
     private final static String clientName = "Jet";
@@ -35,15 +32,13 @@ public class JetClient {
     }
 
     public static void initialize() {
-        delayCalculator = new DelayCalculator();
         configHandler = new ConfigHandler(new ConfigFile("config.txt"));
-        moduleManager = new ModuleManager(ModuleInitializer.createModules(delayCalculator), configHandler);
+        moduleManager = new ModuleManager(ModuleInitializer.createModules(), configHandler);
         panelManager = new PanelManager(PanelInitializer.createPanels(moduleManager));
         guiScreenManager = new GuiScreenManager(GuiScreenInitializer.createGuiScreens(panelManager));
         keybindHandler = new KeybindHandler(moduleManager, guiScreenManager);
-        overlayElementManager = new OverlayElementManager(OverlayElementInitializer.createOverlayElements());
-        messagePrinter = new MessagePrinter();
-        commandManager = new CommandManager(CommandInitializer.createCommands(moduleManager, messagePrinter));
+        overlayElementManager = new OverlayElementManager(OverlayElementInitializer.createOverlayElements(), configHandler);
+        commandManager = new CommandManager(CommandInitializer.createCommands(moduleManager));
     }
 
     public static OverlayElementManager getOverlayElementManager() {

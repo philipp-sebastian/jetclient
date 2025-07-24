@@ -17,7 +17,7 @@ public class ModuleManager {
         this.modules = modules;
         this.activeModules = new ArrayList<>();
         this.configHandler = configHandler;
-        initKeyBinds(modules);
+        initKeyCodes(modules);
     }
 
     public List<Module> getModules() {
@@ -36,9 +36,9 @@ public class ModuleManager {
         }
     }
 
-    private void initKeyBinds(List<Module> modules) {
+    private void initKeyCodes(List<Module> modules) {
         for (Module module : modules) {
-            module.setKeyBind(getKeyCode(module));
+            module.setKeyCode(getKeyCode(module));
         }
     }
 
@@ -49,27 +49,27 @@ public class ModuleManager {
         return null;
     }
 
-    public void setKeyBind(Module module, int keyCode) {
-        module.setKeyBind(keyCode);
-        configHandler.setKeyBind(module.getName(), keyCode);
+    public void setKeyCode(Module module, int keyCode) {
+        module.setKeyCode(keyCode);
+        configHandler.setKeyCode(module.getName(), keyCode);
     }
 
-    public int getKeyCode(Module m) {
-        return configHandler.getKeyBind(m.getName());
+    public int getKeyCode(Module module) {
+        return configHandler.getKeyCode(module.getName());
     }
 
-    public void toggleModule(Module m) {
-        if (activeModules.contains(m)) {
-            activeModules.remove(m);
+    public void toggleModule(Module module) {
+        if (activeModules.contains(module)) {
+            activeModules.remove(module);
         } else {
-            activeModules.add(m);
+            activeModules.add(module);
         }
     }
 
     public void handleKeyEvent(int keyCode) {
-        for (Module m : modules) {
-            if (m.getKeyBind() == keyCode) {
-                toggleModule(m);
+        for (Module module : modules) {
+            if (module.getKeyCode() == keyCode) {
+                toggleModule(module);
                 break;
             }
         }

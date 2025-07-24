@@ -20,7 +20,6 @@ import org.lwjgl.input.Keyboard;
 import java.util.*;
 
 public class KillAura extends RuntimeModule {
-    private final DelayCalculator delayCalculator;
     private final SliderSetting blockRange;
     private final SliderSetting attackSpeed;
     private final BooleanSetting playerTarget;
@@ -33,8 +32,8 @@ public class KillAura extends RuntimeModule {
     private float delay;
     private long lastSwingTime = 0;
 
-    public KillAura(DelayCalculator delayCalculator) {
-        super("KillAura", Keyboard.KEY_NONE, Category.COMBAT, new LinkedHashMap<String, Setting>() {{
+    public KillAura() {
+        super("KillAura", Category.COMBAT, new LinkedHashMap<String, Setting>() {{
             put("blockRange", new SliderSetting("Block range:"));
             put("attackSpeed", new SliderSetting("Attack speed:"));
             put("targetInfo", new InfoSetting("Targets:"));
@@ -42,7 +41,6 @@ public class KillAura extends RuntimeModule {
             put("animalTarget", new BooleanSetting("Animal"));
             put("mobTarget", new BooleanSetting("Mob"));
         }});
-        this.delayCalculator = delayCalculator;
         this.blockRange = (SliderSetting) getSettings().get("blockRange");
         this.attackSpeed = (SliderSetting) getSettings().get("attackSpeed");
         this.playerTarget = (BooleanSetting) this.getSettings().get("playerTarget");
@@ -73,7 +71,7 @@ public class KillAura extends RuntimeModule {
         attackEntity(entity);
 
         lastSwingTime = System.currentTimeMillis();
-        delay = delayCalculator.calculateDelay(attackSpeed.getSliderVal(), MAX_DELAY, 10);
+        delay = DelayCalculator.calculateDelay(attackSpeed.getSliderVal(), MAX_DELAY, 10);
     }
 
     private void faceEntity(Entity entity) {

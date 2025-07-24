@@ -12,12 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ModuleInitializer {
-    public static List<Module> createModules(DelayCalculator delayCalculator) {
+    public static List<Module> createModules() {
         List<Module> modules = new ArrayList<>();
         modules.add(new Sprint());
         modules.add(new Step());
-        modules.add(new ChestStealer(delayCalculator));
-        modules.add(new KillAura(delayCalculator));
+        modules.add(new ChestStealer());
+        modules.add(new KillAura());
         modules.add(new ChestESP());
 
         return modules;

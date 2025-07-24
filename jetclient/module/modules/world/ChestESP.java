@@ -31,7 +31,7 @@ public class ChestESP extends Render3DModule {
     private static final double BLOCK_SIZE = 1.0;
 
     public ChestESP() {
-        super("ChestESP", Keyboard.KEY_NONE, Category.WORLD, new LinkedHashMap<String, Setting>() {{
+        super("ChestESP", Category.WORLD, new LinkedHashMap<String, Setting>() {{
             put("chestType", new InfoSetting("Chest Type:"));
             put("chest", new BooleanSetting("Chest"));
             put("enderChest", new BooleanSetting("Ender Chest"));
