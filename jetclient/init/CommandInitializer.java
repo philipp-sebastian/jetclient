@@ -5,7 +5,6 @@ import dev.jetclient.command.commands.ChangeKeycode;
 import dev.jetclient.command.commands.RemoveKeycode;
 import dev.jetclient.command.commands.ShowCommands;
 import dev.jetclient.module.ModuleManager;
-import dev.jetclient.utils.MessagePrinter;
 
 import java.util.ArrayList;
 import java.util.List;

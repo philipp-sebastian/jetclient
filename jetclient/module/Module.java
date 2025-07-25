@@ -38,4 +38,14 @@ public abstract class Module {
     public Map<String, Setting> getSettings() {
         return this.settings;
     }
+
+    public void onEnable() {}
+
+    public void onDisable() {}
+
+    public void onUpdate() {}
+
+    public void onRender2D() {}
+
+    public void onRender3D(float partialTicks) {}
 }

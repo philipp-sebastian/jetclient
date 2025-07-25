@@ -3,7 +3,6 @@ package dev.jetclient.command.commands;
 import dev.jetclient.command.Command;
 import dev.jetclient.module.Module;
 import dev.jetclient.module.ModuleManager;
-import dev.jetclient.utils.MessagePrinter;
 import org.lwjgl.input.Keyboard;
 
 public class ChangeKeycode extends Command {
@@ -19,22 +18,17 @@ public class ChangeKeycode extends Command {
             return;
         }
 
-        String moduleName = args[1];
-        String keyName = args[2].toUpperCase();
-        int keyCode = Keyboard.getKeyIndex(keyName);
-
+        int keyCode = Keyboard.getKeyIndex(args[2].toUpperCase());
         if (keyCode == Keyboard.KEY_NONE) {
             this.printMessage("Invalid key");
             return;
         }
 
-        Module module = moduleManager.getModule(moduleName);
-        if (module == null) {
-            this.printMessage("Invalid module");
-            return;
+        Module module = moduleManager.getModule(args[1]);
+        if (module != null) {
+            moduleManager.setKeyCode(module, keyCode);
+            this.printMessage("Module: " + module.getName() + " bound to key: " + Keyboard.getKeyName(module.getKeyCode()));
         }
-
-        moduleManager.setKeyCode(module, keyCode);
-        this.printMessage("Module: " + module.getName() + " bound to key: " + Keyboard.getKeyName(module.getKeyCode()));
+        this.printMessage("Invalid module");
     }
 }

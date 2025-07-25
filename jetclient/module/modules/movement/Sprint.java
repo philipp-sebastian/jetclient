@@ -2,12 +2,10 @@ package dev.jetclient.module.modules.movement;
 
 import dev.jetclient.module.Category;
 import dev.jetclient.module.Module;
-import dev.jetclient.module.type.RuntimeModule;
-import org.lwjgl.input.Keyboard;
 
 import java.util.Collections;
 
-public class Sprint extends RuntimeModule {
+public class Sprint extends Module {
 
     public Sprint() {
         super("Sprint", Category.MOVEMENT, Collections.emptyMap());

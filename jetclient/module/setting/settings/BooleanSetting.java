@@ -1,7 +1,7 @@
 package dev.jetclient.module.setting.settings;
 
-import dev.jetclient.gui.screens.modulegui.Panel;
 import dev.jetclient.module.setting.Setting;
+import dev.jetclient.gui.modulegui.Panel;
 import net.minecraft.client.Minecraft;
 
 public class BooleanSetting extends Setting {

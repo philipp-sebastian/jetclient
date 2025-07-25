@@ -1,4 +1,4 @@
-package dev.jetclient.gui.screens.modulegui;
+package dev.jetclient.gui.modulegui;
 
 import dev.jetclient.module.Category;
 import dev.jetclient.module.Module;

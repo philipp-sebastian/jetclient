@@ -6,7 +6,6 @@ import dev.jetclient.module.modules.movement.Sprint;
 import dev.jetclient.module.modules.movement.Step;
 import dev.jetclient.module.modules.player.ChestStealer;
 import dev.jetclient.module.modules.world.ChestESP;
-import dev.jetclient.utils.DelayCalculator;
 
 import java.util.ArrayList;
 import java.util.List;

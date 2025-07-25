@@ -1,7 +1,7 @@
 package dev.jetclient.module.modules.combat;
 
 import dev.jetclient.module.Category;
-import dev.jetclient.module.type.RuntimeModule;
+import dev.jetclient.module.Module;
 import dev.jetclient.module.setting.Setting;
 import dev.jetclient.module.setting.settings.BooleanSetting;
 import dev.jetclient.module.setting.settings.InfoSetting;
@@ -15,11 +15,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.play.client.C02PacketUseEntity;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.util.AxisAlignedBB;
-import org.lwjgl.input.Keyboard;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Random;
 
-public class KillAura extends RuntimeModule {
+public class KillAura extends Module {
     private final SliderSetting blockRange;
     private final SliderSetting attackSpeed;
     private final BooleanSetting playerTarget;

@@ -1,4 +1,4 @@
-package dev.jetclient.utils;
+package dev.jetclient.utils.render;
 
 import org.lwjgl.opengl.GL11;
 

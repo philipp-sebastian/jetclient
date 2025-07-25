@@ -1,4 +1,4 @@
-package dev.jetclient.gui.screens;
+package dev.jetclient.gui;
 
 import dev.jetclient.JetClient;
 import dev.jetclient.overlay.OverlayElement;

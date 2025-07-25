@@ -1,11 +1,11 @@
 package dev.jetclient.module.modules.world;
 
 import dev.jetclient.module.Category;
-import dev.jetclient.module.type.Render3DModule;
+import dev.jetclient.module.Module;
 import dev.jetclient.module.setting.Setting;
 import dev.jetclient.module.setting.settings.BooleanSetting;
 import dev.jetclient.module.setting.settings.InfoSetting;
-import dev.jetclient.utils.GLColor;
+import dev.jetclient.utils.render.GLColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.culling.ICamera;
@@ -15,12 +15,11 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.tileentity.TileEntityEnderChest;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import java.util.LinkedHashMap;
 
-public class ChestESP extends Render3DModule {
+public class ChestESP extends Module {
     private final ICamera cameraFrustum;
     private final BooleanSetting chest;
     private final BooleanSetting enderChest;

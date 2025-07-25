@@ -1,9 +1,6 @@
 package dev.jetclient.module;
 
 import dev.jetclient.config.ConfigHandler;
-import dev.jetclient.module.type.Render2DModule;
-import dev.jetclient.module.type.RuntimeModule;
-import dev.jetclient.module.type.Render3DModule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +14,7 @@ public class ModuleManager {
         this.modules = modules;
         this.activeModules = new ArrayList<>();
         this.configHandler = configHandler;
-        initKeyCodes(modules);
+        initKeyCodes();
     }
 
     public List<Module> getModules() {
@@ -29,14 +26,12 @@ public class ModuleManager {
     }
 
     public void onUpdate() {
-        for (Module activeModule : activeModules) {
-            if (activeModule instanceof RuntimeModule) {
-                ((RuntimeModule) activeModule).onUpdate();
-            }
-        }
+       for (Module module : activeModules) {
+           module.onUpdate();
+       }
     }
 
-    private void initKeyCodes(List<Module> modules) {
+    private void initKeyCodes() {
         for (Module module : modules) {
             module.setKeyCode(getKeyCode(module));
         }
@@ -44,7 +39,7 @@ public class ModuleManager {
 
     public Module getModule(String module) {
         for (Module m : modules) {
-            if (m.getName().equals(module)) return m;
+            if (m.getName().equalsIgnoreCase(module)) return m;
         }
         return null;
     }
@@ -77,9 +72,9 @@ public class ModuleManager {
 
     public List<Module> getModulesByCategory(Category category) {
         List<Module> modulesByCategory = new ArrayList<>();
-        for (Module m : modules) {
-            if (m.getCategory() == category) {
-                modulesByCategory.add(m);
+        for (Module module : modules) {
+            if (module.getCategory() == category) {
+                modulesByCategory.add(module);
             }
         }
         return modulesByCategory;
@@ -95,18 +90,14 @@ public class ModuleManager {
     }
 
     public void onRender3D(float partialTicks) {
-        for (Module activeModule : activeModules) {
-            if (activeModule instanceof Render3DModule) {
-                ((Render3DModule) activeModule).onRender3D(partialTicks);
-            }
+        for (Module module : activeModules) {
+            module.onRender3D(partialTicks);
         }
     }
 
     public void onRender2D() {
-        for (Module activeModule : activeModules) {
-            if (activeModule instanceof Render2DModule) {
-                ((Render2DModule) activeModule).onRender2D();
-            }
+        for (Module module : activeModules) {
+            module.onRender2D();
         }
     }
 }

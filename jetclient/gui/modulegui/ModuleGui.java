@@ -1,16 +1,16 @@
-package dev.jetclient.gui.screens.modulegui;
+package dev.jetclient.gui.modulegui;
 
-import dev.jetclient.gui.HotkeyScreen;
+import net.minecraft.client.gui.GuiScreen;
 import org.lwjgl.input.Keyboard;
 
 import java.io.IOException;
 
-public class ModuleGui extends HotkeyScreen {
+public class ModuleGui extends GuiScreen {
     PanelManager panelManager;
 
-    public ModuleGui(PanelManager panelManager) {
-        super(Keyboard.KEY_RSHIFT);
+    public static final int HOT_KEY = Keyboard.KEY_RSHIFT;
 
+    public ModuleGui(PanelManager panelManager) {
         this.panelManager = panelManager;
     }
 

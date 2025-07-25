@@ -18,15 +18,11 @@ public class RemoveKeycode extends Command {
             return;
         }
 
-        String moduleName = args[1];
-        for (Module module : moduleManager.getModules()) {
-            if (module.getName().equalsIgnoreCase(moduleName)) {
-               module.setKeyCode(Keyboard.KEY_NONE);
-               printMessage("Removed keycode from module: " + module.getName());
-               return;
-            }
+        Module module = moduleManager.getModule(args[1]);
+        if (module != null) {
+            moduleManager.setKeyCode(module, Keyboard.KEY_NONE);
+            printMessage("Removed keycode from module: " + module.getName());
         }
-
         printMessage("Invalid module");
     }
 }
