@@ -1,9 +1,13 @@
 package dev.jetclient.module;
 
 import dev.jetclient.config.ConfigHandler;
+import dev.jetclient.module.setting.Setting;
+import dev.jetclient.module.setting.settings.BooleanSetting;
+import dev.jetclient.module.setting.settings.SliderSetting;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ModuleManager {
     private final List<Module> modules;
@@ -15,6 +19,7 @@ public class ModuleManager {
         this.activeModules = new ArrayList<>();
         this.configHandler = configHandler;
         initKeyCodes();
+        initModuleSettings();
     }
 
     public List<Module> getModules() {
@@ -34,6 +39,36 @@ public class ModuleManager {
     private void initKeyCodes() {
         for (Module module : modules) {
             module.setKeyCode(getKeyCode(module));
+        }
+    }
+
+    private void initModuleSettings() {
+        for (Module module : modules) {
+                for (Map.Entry<String, Setting> entries : module.getSettings().entrySet()) {
+                    Setting setting = entries.getValue();
+                    String settingsKey = entries.getKey();
+                    setting.setOwner(module);
+
+                    // Fetch settings from config
+                    if (setting instanceof SliderSetting) {
+                        SliderSetting sliderSetting = (SliderSetting) setting;
+                        sliderSetting.setSliderVal(configHandler.getModuleSettingSliderValue(module.getName(), settingsKey));
+                    } else if (setting instanceof BooleanSetting) {
+                        BooleanSetting booleanSetting = (BooleanSetting) setting;
+                        booleanSetting.setValue(configHandler.getModuleSettingBooleanValue(module.getName(), settingsKey));
+                    }
+
+                    // Set listeners
+                    setting.setChangeListener((changedModule, changedSetting) -> {
+                        if (changedSetting instanceof SliderSetting) {
+                            SliderSetting sliderSetting = (SliderSetting) changedSetting;
+                            configHandler.setModuleSettingSliderValue(changedModule.getName(), settingsKey, sliderSetting.getSliderVal());
+                        } else if (changedSetting instanceof BooleanSetting) {
+                            BooleanSetting booleanSetting = (BooleanSetting) changedSetting;
+                            configHandler.setModuleSettingBooleanValue(changedModule.getName(), settingsKey, booleanSetting.getValue());
+                        }
+                    });
+                }
         }
     }
 

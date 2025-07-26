@@ -22,6 +22,7 @@ public class BooleanSetting extends Setting {
     @Override
     public void handleClick(int mouseX, int mouseY) {
         setValue(!getValue());
+        notifyChange();
     }
 
     @Override

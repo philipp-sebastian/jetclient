@@ -23,10 +23,37 @@ public class ConfigHandler {
 
     public boolean getOverlayElementState(String overlayElement) {
         String value = configFile.getValue(overlayElement);
-        return value != null && value.equalsIgnoreCase("true");
+        if (value != null) {
+            return Boolean.parseBoolean(value);
+        }
+        return false;
     }
 
     public void setOverlayElementState(String overlayElement, boolean state) {
-        configFile.setValue(overlayElement, state ? "true" : "false");
+        configFile.setValue(overlayElement, Boolean.toString(state));
+    }
+
+    public float getModuleSettingSliderValue(String moduleName, String settingsName) {
+        String value = configFile.getValue(moduleName + "_" + settingsName);
+        if (value != null) {
+            return Float.parseFloat(value);
+        }
+        return 0.5F;
+    }
+
+    public boolean getModuleSettingBooleanValue(String moduleName, String settingsName) {
+        String value = configFile.getValue(moduleName + "_" + settingsName);
+        if (value != null) {
+            return Boolean.parseBoolean(value);
+        }
+        return false;
+    }
+
+    public void setModuleSettingSliderValue(String moduleName, String settingsName, float value) {
+        configFile.setValue(moduleName + "_" + settingsName, Float.toString(value));
+    }
+
+    public void setModuleSettingBooleanValue(String moduleName, String settingsName, boolean value) {
+        configFile.setValue(moduleName + "_" + settingsName, Boolean.toString(value));
     }
 }

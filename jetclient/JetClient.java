@@ -48,6 +48,8 @@ public class JetClient {
 
     public static PanelManager getPanelManager() { return panelManager; }
 
+    public static ConfigHandler getConfigHandler() { return configHandler; }
+
     public static void injectDependencies(Minecraft mc) {
         mc.setModuleManager(moduleManager);
         mc.setKeybindHandler(keyHandler);

@@ -18,6 +18,10 @@ public class SliderSetting extends Setting {
         return this.sliderVal;
     }
 
+    public void setSliderVal(float value) {
+        this.sliderVal = value;
+    }
+
     @Override
     public void handleClick(int mouseX, int mouseY) {
         /* return, if click was not on the slider */
@@ -25,6 +29,7 @@ public class SliderSetting extends Setting {
 
         this.sliderVal = (float) (mouseX - this.x) / Panel.getWidth();
         this.sliderVal = Math.max(0f, Math.min(1f, this.sliderVal));
+        notifyChange();
     }
 
     @Override
