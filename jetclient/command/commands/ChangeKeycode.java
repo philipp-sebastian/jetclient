@@ -25,10 +25,12 @@ public class ChangeKeycode extends Command {
         }
 
         Module module = moduleManager.getModule(args[1]);
-        if (module != null) {
-            moduleManager.setKeyCode(module, keyCode);
-            this.printMessage("Module: " + module.getName() + " bound to key: " + Keyboard.getKeyName(module.getKeyCode()));
+        if (module == null) {
+            this.printMessage("Invalid module");
+            return;
         }
-        this.printMessage("Invalid module");
+
+        module.setKeyCode(keyCode);
+        this.printMessage("Module: " + module.getName() + " bound to key: " + Keyboard.getKeyName(module.getKeyCode()));
     }
 }

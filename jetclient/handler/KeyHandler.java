@@ -1,8 +1,8 @@
 package dev.jetclient.handler;
 
 import dev.jetclient.JetClient;
-import dev.jetclient.module.ModuleManager;
 import dev.jetclient.gui.modulegui.ModuleGui;
+import dev.jetclient.module.ModuleManager;
 import net.minecraft.client.Minecraft;
 
 public class KeyHandler {

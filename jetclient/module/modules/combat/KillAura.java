@@ -56,7 +56,7 @@ public class KillAura extends Module {
         if (System.currentTimeMillis() - lastSwingTime < delay) return;
 
         /* radius should be between (1, 10) */
-        float radius =  1 + (blockRange.getSliderVal() * (MAX_RADIUS - 1));
+        float radius = 1 + (blockRange.getSliderVal() * (MAX_RADIUS - 1));
         List<Entity> entities = Minecraft.getMinecraft().theWorld.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(mc.thePlayer.posX - radius, mc.thePlayer.posY - radius, mc.thePlayer.posZ - radius,
                 mc.thePlayer.posX + radius, mc.thePlayer.posY + radius, mc.thePlayer.posZ + radius));
         List<Entity> validEntities = new ArrayList<>();

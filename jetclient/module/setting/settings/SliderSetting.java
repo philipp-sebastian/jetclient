@@ -1,7 +1,7 @@
 package dev.jetclient.module.setting.settings;
 
-import dev.jetclient.module.setting.Setting;
 import dev.jetclient.gui.modulegui.Panel;
+import dev.jetclient.module.setting.Setting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 
@@ -34,7 +34,8 @@ public class SliderSetting extends Setting {
 
     @Override
     public void draw(int x, int y) {
-        this.x = x; this.y = y;
+        this.x = x;
+        this.y = y;
 
         Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(this.getName(), x, y, 0xFFFFFFFF);
         Gui.drawRect(x, y + Panel.getEntryHeight(), x + Panel.getWidth(), y + (2 * Panel.getEntryHeight()), 0xFF222222);

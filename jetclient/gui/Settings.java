@@ -52,9 +52,12 @@ public class Settings extends GuiScreen {
             return;
         }
 
-        List<OverlayElement> elements = overlayElementManager.getOverlayElements();
-        if (button.id >= 0 && button.id < elements.size()) {
-            overlayElementManager.toggleOverlayElement(elements.get(button.id));
+        List<OverlayElement> overlayElements = overlayElementManager.getOverlayElements();
+        if (button.id >= 0 && button.id < overlayElements.size()) {
+            OverlayElement overlayElement = overlayElements.get(button.id);
+            if (overlayElement != null) {
+                overlayElement.setActive(!overlayElement.isActive());
+            }
         }
     }
 

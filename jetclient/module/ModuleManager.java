@@ -31,44 +31,42 @@ public class ModuleManager {
     }
 
     public void onUpdate() {
-       for (Module module : activeModules) {
-           module.onUpdate();
-       }
+        for (Module module : activeModules) {
+            module.onUpdate();
+        }
     }
 
     private void initKeyCodes() {
         for (Module module : modules) {
-            module.setKeyCode(getKeyCode(module));
+            module.setKeyCode(configHandler.getKeyCode(module.getName()));
+            module.setChangeListener((int keyCode) -> {
+                configHandler.setKeyCode(module.getName(), keyCode);
+            });
         }
     }
 
     private void initModuleSettings() {
         for (Module module : modules) {
-                for (Map.Entry<String, Setting> entries : module.getSettings().entrySet()) {
-                    Setting setting = entries.getValue();
-                    String settingsKey = entries.getKey();
-                    setting.setOwner(module);
+            for (Map.Entry<String, Setting> entries : module.getSettings().entrySet()) {
+                String settingsKey = entries.getKey();
+                Setting setting = entries.getValue();
 
-                    // Fetch settings from config
-                    if (setting instanceof SliderSetting) {
-                        SliderSetting sliderSetting = (SliderSetting) setting;
-                        sliderSetting.setSliderVal(configHandler.getModuleSettingSliderValue(module.getName(), settingsKey));
-                    } else if (setting instanceof BooleanSetting) {
-                        BooleanSetting booleanSetting = (BooleanSetting) setting;
-                        booleanSetting.setValue(configHandler.getModuleSettingBooleanValue(module.getName(), settingsKey));
-                    }
-
-                    // Set listeners
-                    setting.setChangeListener((changedModule, changedSetting) -> {
-                        if (changedSetting instanceof SliderSetting) {
-                            SliderSetting sliderSetting = (SliderSetting) changedSetting;
-                            configHandler.setModuleSettingSliderValue(changedModule.getName(), settingsKey, sliderSetting.getSliderVal());
-                        } else if (changedSetting instanceof BooleanSetting) {
-                            BooleanSetting booleanSetting = (BooleanSetting) changedSetting;
-                            configHandler.setModuleSettingBooleanValue(changedModule.getName(), settingsKey, booleanSetting.getValue());
-                        }
-                    });
+                /* Get settings from config */
+                if (setting instanceof SliderSetting) {
+                    ((SliderSetting) setting).setSliderVal(configHandler.getModuleSettingSliderValue(module.getName(), settingsKey));
+                } else if (setting instanceof BooleanSetting) {
+                    ((BooleanSetting) setting).setValue(configHandler.getModuleSettingBooleanValue(module.getName(), settingsKey));
                 }
+
+                /* Set listeners */
+                setting.setChangeListener((changedSetting) -> {
+                    if (changedSetting instanceof SliderSetting) {
+                        configHandler.setModuleSettingSliderValue(module.getName(), settingsKey, ((SliderSetting) changedSetting).getSliderVal());
+                    } else if (changedSetting instanceof BooleanSetting) {
+                        configHandler.setModuleSettingBooleanValue(module.getName(), settingsKey, ((BooleanSetting) changedSetting).getValue());
+                    }
+                });
+            }
         }
     }
 
@@ -77,15 +75,6 @@ public class ModuleManager {
             if (m.getName().equalsIgnoreCase(module)) return m;
         }
         return null;
-    }
-
-    public void setKeyCode(Module module, int keyCode) {
-        module.setKeyCode(keyCode);
-        configHandler.setKeyCode(module.getName(), keyCode);
-    }
-
-    public int getKeyCode(Module module) {
-        return configHandler.getKeyCode(module.getName());
     }
 
     public void toggleModule(Module module) {

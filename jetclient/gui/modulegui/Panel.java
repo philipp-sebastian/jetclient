@@ -77,16 +77,16 @@ public class Panel {
     }
 
     private void drawModules() {
-            int currentY = y + PADDING + ENTRY_HEIGHT;
-            int counter = 1;
+        int currentY = y + PADDING + ENTRY_HEIGHT;
+        int counter = 1;
 
-            for (Module module : modules) {
-                if (animationHeight < counter * ENTRY_HEIGHT) break;
+        for (Module module : modules) {
+            if (animationHeight < counter * ENTRY_HEIGHT) break;
 
-                drawText(module.getName(), x + PADDING, currentY, moduleManager.isModuleActive(module.getClass()) ? ACTIVE_COLOR : INACTIVE_COLOR);
-                currentY += ENTRY_HEIGHT;
-                counter++;
-            }
+            drawText(module.getName(), x + PADDING, currentY, moduleManager.isModuleActive(module.getClass()) ? ACTIVE_COLOR : INACTIVE_COLOR);
+            currentY += ENTRY_HEIGHT;
+            counter++;
+        }
     }
 
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {

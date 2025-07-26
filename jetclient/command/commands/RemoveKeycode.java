@@ -20,7 +20,7 @@ public class RemoveKeycode extends Command {
 
         Module module = moduleManager.getModule(args[1]);
         if (module != null) {
-            moduleManager.setKeyCode(module, Keyboard.KEY_NONE);
+            module.setKeyCode(Keyboard.KEY_NONE);
             printMessage("Removed keycode from module: " + module.getName());
         }
         printMessage("Invalid module");

@@ -6,12 +6,17 @@ import net.minecraft.client.Minecraft;
 import java.util.Map;
 
 public abstract class Module {
-    protected final Minecraft mc = Minecraft.getMinecraft();
+    public interface ChangeListener {
+        void onKeyCodeChanged(int keyCode);
+    }
 
     private final String name;
     private int keyCode;
     private final Category category;
     private final Map<String, Setting> settings;
+    private ChangeListener changeListener;
+
+    protected final Minecraft mc = Minecraft.getMinecraft();
 
     protected Module(String name, Category category, Map<String, Setting> settings) {
         this.name = name;
@@ -29,6 +34,7 @@ public abstract class Module {
 
     public void setKeyCode(int keyCode) {
         this.keyCode = keyCode;
+        notifyChange();
     }
 
     public Category getCategory() {
@@ -39,13 +45,28 @@ public abstract class Module {
         return this.settings;
     }
 
-    public void onEnable() {}
+    public void setChangeListener(ChangeListener listener) {
+        this.changeListener = listener;
+    }
 
-    public void onDisable() {}
+    protected void notifyChange() {
+        if (changeListener != null) {
+            changeListener.onKeyCodeChanged(keyCode);
+        }
+    }
 
-    public void onUpdate() {}
+    public void onEnable() {
+    }
 
-    public void onRender2D() {}
+    public void onDisable() {
+    }
 
-    public void onRender3D(float partialTicks) {}
+    public void onUpdate() {
+    }
+
+    public void onRender2D() {
+    }
+
+    public void onRender3D(float partialTicks) {
+    }
 }

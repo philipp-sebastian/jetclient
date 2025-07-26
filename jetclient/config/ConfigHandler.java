@@ -21,7 +21,7 @@ public class ConfigHandler {
         configFile.setValue(moduleName, Keyboard.getKeyName(keyCode));
     }
 
-    public boolean getOverlayElementState(String overlayElement) {
+    public boolean getOverlayElementActive(String overlayElement) {
         String value = configFile.getValue(overlayElement);
         if (value != null) {
             return Boolean.parseBoolean(value);
@@ -29,8 +29,8 @@ public class ConfigHandler {
         return false;
     }
 
-    public void setOverlayElementState(String overlayElement, boolean state) {
-        configFile.setValue(overlayElement, Boolean.toString(state));
+    public void setOverlayElementActive(String overlayElement, boolean value) {
+        configFile.setValue(overlayElement, Boolean.toString(value));
     }
 
     public float getModuleSettingSliderValue(String moduleName, String settingsName) {
