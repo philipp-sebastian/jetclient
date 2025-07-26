@@ -1,19 +1,15 @@
 package dev.jetclient.overlay;
 
-import dev.jetclient.module.ModuleManager;
-
 public abstract class OverlayElement {
     public interface ChangeListener {
         void onActiveChanged(boolean value);
     }
 
-    protected ModuleManager moduleManager;
     private final String name;
     private boolean active = true;
     private ChangeListener changeListener;
 
-    public OverlayElement(ModuleManager moduleManager, String name) {
-        this.moduleManager = moduleManager;
+    public OverlayElement(String name) {
         this.name = name;
     }
 

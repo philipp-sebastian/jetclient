@@ -202,17 +202,15 @@ Render2DModule ..|> Module
 KeybindHandler ..> ModuleManager
 KeybindHandler ..> GuiScreenManager
 Panel ..> "*" Module
-Panel ..> Category
 ModuleGui ..> PanelManager
 PanelManager ..> "*" Panel
-Panel ..> ModuleManager
-OverlayElement ..> ModuleManager
 OverlayElementManager ..> "*" OverlayElement
 CommandManager ..> "*" Command
 Command ..> ModuleManager
 Command ..> MessagePrinter
 ChangeKeybind ..|> Command
 ModuleList ..|> OverlayElement
+ModuleList ..> "*" Module
 ChestStealer ..|> RuntimeModule
 ChestESP ..|> Render3DModule
 SliderSetting ..|> Setting

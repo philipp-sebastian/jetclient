@@ -10,6 +10,7 @@ public abstract class Module {
         void onKeyCodeChanged(int keyCode);
     }
 
+    private boolean active;
     private final String name;
     private int keyCode;
     private final Category category;
@@ -22,6 +23,14 @@ public abstract class Module {
         this.name = name;
         this.category = category;
         this.settings = settings;
+    }
+
+    public void setActive(boolean value) {
+        this.active = value;
+    }
+
+    public boolean isActive() {
+        return this.active;
     }
 
     public String getName() {

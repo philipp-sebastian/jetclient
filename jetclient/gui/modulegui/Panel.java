@@ -1,8 +1,6 @@
 package dev.jetclient.gui.modulegui;
 
-import dev.jetclient.module.Category;
 import dev.jetclient.module.Module;
-import dev.jetclient.module.ModuleManager;
 import dev.jetclient.module.setting.Setting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -17,8 +15,7 @@ public class Panel {
     private static final int ACTIVE_COLOR = 0x3EE900;
     private static final int INACTIVE_COLOR = 0xFFFFFFFF;
 
-    private final ModuleManager moduleManager;
-    private final Category category;
+    private final String category;
     private int x, y;
 
     private final List<Module> modules;
@@ -33,13 +30,11 @@ public class Panel {
     private int animationHeight = 0;
     private long lastAnimationTime = 0;
 
-    public Panel(ModuleManager moduleManager, Category category, int x, int y) {
-        this.moduleManager = moduleManager;
+    public Panel(List<Module> modules, String category, int x, int y) {
+        this.modules = modules;
         this.category = category;
         this.x = x;
         this.y = y;
-
-        this.modules = moduleManager.getModulesByCategory(category);
     }
 
     public void drawScreen(int mouseX, int mouseY) {
@@ -73,7 +68,7 @@ public class Panel {
     }
 
     private void drawCategoryTitle() {
-        drawText(category.name(), x + PADDING, y + PADDING, 0xFFFFFFFF);
+        drawText(category, x + PADDING, y + PADDING, 0xFFFFFFFF);
     }
 
     private void drawModules() {
@@ -83,7 +78,7 @@ public class Panel {
         for (Module module : modules) {
             if (animationHeight < counter * ENTRY_HEIGHT) break;
 
-            drawText(module.getName(), x + PADDING, currentY, moduleManager.isModuleActive(module.getClass()) ? ACTIVE_COLOR : INACTIVE_COLOR);
+            drawText(module.getName(), x + PADDING, currentY, module.isActive() ? ACTIVE_COLOR : INACTIVE_COLOR);
             currentY += ENTRY_HEIGHT;
             counter++;
         }
@@ -117,13 +112,13 @@ public class Panel {
 
     private boolean handleModuleClick(int mouseX, int mouseY, int mouseButton) {
         int currentY = y + PADDING + ENTRY_HEIGHT;
-        for (Module m : modules) {
+        for (Module module : modules) {
             if (isInBox(mouseX, mouseY, x, currentY, WIDTH, ENTRY_HEIGHT)) {
                 if (mouseButton == 0) {
-                    moduleManager.toggleModule(m);
-                } else if (mouseButton == 1 && !m.getSettings().isEmpty()) {
-                    if (selectedModule == null || !selectedModule.getName().equals(m.getName())) {
-                        selectedModule = m;
+                    module.setActive(!module.isActive());
+                } else if (mouseButton == 1 && !module.getSettings().isEmpty()) {
+                    if (selectedModule == null || !selectedModule.getName().equals(module.getName())) {
+                        selectedModule = module;
                         showSettings = true;
                     } else {
                         selectedModule = null;

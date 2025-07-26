@@ -34,7 +34,7 @@ public class JetClient {
         moduleManager = new ModuleManager(ModuleInitializer.createModules(), configHandler);
         panelManager = new PanelManager(moduleManager);
         keyHandler = new KeyHandler(moduleManager);
-        overlayElementManager = new OverlayElementManager(OverlayElementInitializer.createOverlayElements(), configHandler);
+        overlayElementManager = new OverlayElementManager(OverlayElementInitializer.createOverlayElements(moduleManager.getModules()), configHandler);
         commandManager = new CommandManager(CommandInitializer.createCommands(moduleManager));
     }
 

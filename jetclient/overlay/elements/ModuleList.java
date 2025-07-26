@@ -1,15 +1,18 @@
 package dev.jetclient.overlay.elements;
 
-import dev.jetclient.JetClient;
 import dev.jetclient.module.Module;
 import dev.jetclient.overlay.OverlayElement;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 
-public class ModuleList extends OverlayElement {
+import java.util.List;
 
-    public ModuleList() {
-        super(JetClient.getModuleManager(), "ModuleList");
+public class ModuleList extends OverlayElement {
+    private final List<Module> modules;
+
+    public ModuleList(List<Module> modules) {
+        super("ModuleList");
+        this.modules = modules;
     }
 
     @Override
@@ -17,10 +20,12 @@ public class ModuleList extends OverlayElement {
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
         int yOffset = 1;
 
-        for (Module activeModule : moduleManager.getActiveModules()) {
-            int xOffset = sr.getScaledWidth() - Minecraft.getMinecraft().fontRendererObj.getStringWidth(activeModule.getName()) - 1;
-            Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(activeModule.getName(), xOffset, yOffset, 0xFFFFFF);
-            yOffset += 10;
+        for (Module module : modules) {
+            if (module.isActive()) {
+                int xOffset = sr.getScaledWidth() - Minecraft.getMinecraft().fontRendererObj.getStringWidth(module.getName()) - 1;
+                Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(module.getName(), xOffset, yOffset, 0xFFFFFF);
+                yOffset += 10;
+            }
         }
     }
 }

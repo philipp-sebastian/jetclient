@@ -26,7 +26,7 @@ public class PanelManager {
         int currentY = PADDING;
 
         for (Category category : Category.values()) {
-            panels.add(new Panel(moduleManager, category, currentX, currentY));
+            panels.add(new Panel(moduleManager.getModulesByCategory(category), category.toString(), currentX, currentY));
             currentX += Panel.getWidth() + GAP;
 
             if (currentX + Panel.getWidth() > screenWidth) {
@@ -37,20 +37,20 @@ public class PanelManager {
     }
 
     public void drawPanels(int mouseX, int mouseY) {
-        for (Panel p : panels) {
-            p.drawScreen(mouseX, mouseY);
+        for (Panel panel : panels) {
+            panel.drawScreen(mouseX, mouseY);
         }
     }
 
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
-        for (Panel p : panels) {
-            p.mouseClicked(mouseX, mouseY, mouseButton);
+        for (Panel panel : panels) {
+            panel.mouseClicked(mouseX, mouseY, mouseButton);
         }
     }
 
     public void mouseReleased(int mouseX, int mouseY, int state) {
-        for (Panel p : panels) {
-            p.mouseReleased(mouseX, mouseY, state);
+        for (Panel panel : panels) {
+            panel.mouseReleased(mouseX, mouseY, state);
         }
     }
 }
