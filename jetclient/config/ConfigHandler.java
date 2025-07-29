@@ -10,7 +10,7 @@ public class ConfigHandler {
     }
 
     public int getKeyCode(String moduleName) {
-        String keyCode = configFile.getValue(moduleName);
+        String keyCode = configFile.getValue(moduleName + "_keycode");
         if (keyCode != null) {
             return Keyboard.getKeyIndex(keyCode);
         }
@@ -18,22 +18,22 @@ public class ConfigHandler {
     }
 
     public void setKeyCode(String moduleName, int keyCode) {
-        configFile.setValue(moduleName, Keyboard.getKeyName(keyCode));
+        configFile.setValue(moduleName + "_keycode", Keyboard.getKeyName(keyCode));
     }
 
-    public boolean getOverlayElementActive(String overlayElement) {
-        String value = configFile.getValue(overlayElement);
+    public boolean getOverlayElementEnabled(String overlayElement) {
+        String value = configFile.getValue(overlayElement + "_enabled");
         if (value != null) {
             return Boolean.parseBoolean(value);
         }
         return false;
     }
 
-    public void setOverlayElementActive(String overlayElement, boolean value) {
-        configFile.setValue(overlayElement, Boolean.toString(value));
+    public void setOverlayElementEnabled(String overlayElement, boolean enabled) {
+        configFile.setValue(overlayElement + "_enabled", Boolean.toString(enabled));
     }
 
-    public float getModuleSettingSliderValue(String moduleName, String settingsName) {
+    public float getSliderValue(String moduleName, String settingsName) {
         String value = configFile.getValue(moduleName + "_" + settingsName);
         if (value != null) {
             return Float.parseFloat(value);
@@ -41,7 +41,11 @@ public class ConfigHandler {
         return 0.5F;
     }
 
-    public boolean getModuleSettingBooleanValue(String moduleName, String settingsName) {
+    public void setSliderValue(String moduleName, String settingsName, float value) {
+        configFile.setValue(moduleName + "_" + settingsName, Float.toString(value));
+    }
+
+    public boolean getBooleanValue(String moduleName, String settingsName) {
         String value = configFile.getValue(moduleName + "_" + settingsName);
         if (value != null) {
             return Boolean.parseBoolean(value);
@@ -49,11 +53,23 @@ public class ConfigHandler {
         return false;
     }
 
-    public void setModuleSettingSliderValue(String moduleName, String settingsName, float value) {
-        configFile.setValue(moduleName + "_" + settingsName, Float.toString(value));
+    public void setBooleanValue(String moduleName, String settingsName, boolean value) {
+        configFile.setValue(moduleName + "_" + settingsName, Boolean.toString(value));
     }
 
-    public void setModuleSettingBooleanValue(String moduleName, String settingsName, boolean value) {
-        configFile.setValue(moduleName + "_" + settingsName, Boolean.toString(value));
+    public boolean getModuleEnabled(String moduleName) {
+        String value = configFile.getValue(moduleName + "_enabled");
+        if (value != null) {
+            return Boolean.parseBoolean(value);
+        }
+        return false;
+    }
+
+    public void setModuleEnabled(String moduleName, boolean enabled) {
+        configFile.setValue(moduleName + "_enabled", Boolean.toString(enabled));
+    }
+
+    public void saveConfig() {
+        configFile.saveConfig();
     }
 }

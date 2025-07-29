@@ -16,10 +16,13 @@ public class OverlayElementManager {
 
     public void initOverlayElementState() {
         for (OverlayElement overlayElement : overlayElements) {
-            overlayElement.setActive(configHandler.getOverlayElementActive(overlayElement.getName()));
-            overlayElement.setChangeListener((boolean value) -> {
-                configHandler.setOverlayElementActive(overlayElement.getName(), value);
-            });
+            overlayElement.setActive(configHandler.getOverlayElementEnabled(overlayElement.getName()));
+        }
+    }
+
+    public void onShutdown() {
+        for (OverlayElement overlayElement : overlayElements) {
+            configHandler.setOverlayElementEnabled(overlayElement.getName(), overlayElement.isActive());
         }
     }
 

@@ -29,6 +29,12 @@ public class JetClient {
         return clientName;
     }
 
+    public static void onShutdown() {
+        moduleManager.onShutdown();
+        overlayElementManager.onShutdown();
+        configHandler.saveConfig();
+    }
+
     public static void initialize() {
         configHandler = new ConfigHandler(new ConfigFile("config.txt"));
         moduleManager = new ModuleManager(ModuleInitializer.createModules(), configHandler);

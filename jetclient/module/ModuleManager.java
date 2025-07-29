@@ -16,6 +16,7 @@ public class ModuleManager {
     public ModuleManager(List<Module> modules, ConfigHandler configHandler) {
         this.modules = modules;
         this.configHandler = configHandler;
+        initModuleStates();
         initKeyCodes();
         initModuleSettings();
     }
@@ -32,36 +33,46 @@ public class ModuleManager {
         }
     }
 
+    private void initModuleStates() {
+        for (Module module : modules) {
+            module.setActive(configHandler.getModuleEnabled(module.getName()));
+        }
+    }
+
     private void initKeyCodes() {
         for (Module module : modules) {
             module.setKeyCode(configHandler.getKeyCode(module.getName()));
-            module.setChangeListener((int keyCode) -> {
-                configHandler.setKeyCode(module.getName(), keyCode);
-            });
         }
     }
 
     private void initModuleSettings() {
         for (Module module : modules) {
-            for (Map.Entry<String, Setting> entries : module.getSettings().entrySet()) {
-                String settingsKey = entries.getKey();
-                Setting setting = entries.getValue();
+            for (Map.Entry<String, Setting> setting : module.getSettings().entrySet()) {
+                String key = setting.getKey();
+                Setting value = setting.getValue();
 
-                /* Get settings from config */
-                if (setting instanceof SliderSetting) {
-                    ((SliderSetting) setting).setSliderVal(configHandler.getModuleSettingSliderValue(module.getName(), settingsKey));
-                } else if (setting instanceof BooleanSetting) {
-                    ((BooleanSetting) setting).setValue(configHandler.getModuleSettingBooleanValue(module.getName(), settingsKey));
+                if (value instanceof SliderSetting) {
+                    ((SliderSetting) value).setSliderVal(configHandler.getSliderValue(module.getName(), key));
+                } else if (value instanceof BooleanSetting) {
+                    ((BooleanSetting) value).setValue(configHandler.getBooleanValue(module.getName(), key));
                 }
+            }
+        }
+    }
 
-                /* Set listeners */
-                setting.setChangeListener((changedSetting) -> {
-                    if (changedSetting instanceof SliderSetting) {
-                        configHandler.setModuleSettingSliderValue(module.getName(), settingsKey, ((SliderSetting) changedSetting).getSliderVal());
-                    } else if (changedSetting instanceof BooleanSetting) {
-                        configHandler.setModuleSettingBooleanValue(module.getName(), settingsKey, ((BooleanSetting) changedSetting).getValue());
-                    }
-                });
+    public void onShutdown() {
+        for (Module module : modules) {
+            configHandler.setModuleEnabled(module.getName(), module.isActive());
+            configHandler.setKeyCode(module.getName(), module.getKeyCode());
+            for (Map.Entry<String, Setting> setting : module.getSettings().entrySet()) {
+                String key = setting.getKey();
+                Setting value = setting.getValue();
+                if (value instanceof BooleanSetting) {
+                    configHandler.setBooleanValue(module.getName(), key, ((BooleanSetting) value).getValue());
+                }
+                if (value instanceof SliderSetting) {
+                    configHandler.setSliderValue(module.getName(), key, ((SliderSetting) value).getSliderVal());
+                }
             }
         }
     }

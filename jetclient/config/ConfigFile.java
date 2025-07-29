@@ -1,15 +1,18 @@
 package dev.jetclient.config;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class ConfigFile {
     private final File configFile;
+    private final Map<String, String> configMap = new HashMap<>();
 
     public ConfigFile(String path) {
         this.configFile = new File(path);
         createConfigFile();
+        loadConfig();
     }
 
     private void createConfigFile() {
@@ -22,48 +25,62 @@ public class ConfigFile {
         }
     }
 
-    public void setValue(String key, String value) {
-        List<String> lines = new ArrayList<>();
-        try {
-            /* Replace existing key with new value or create a new key-value pair */
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(configFile));
+    private void loadConfig() {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(configFile))) {
             String line;
+            String currentSection = "";
+
             while ((line = bufferedReader.readLine()) != null) {
-                if (!line.startsWith(key + "=")) {
-                    lines.add(line);
+                line = line.trim();
+                if (line.isEmpty()) continue;
+
+                if (line.startsWith("[") && line.endsWith("]")) {
+                    currentSection = line.substring(1, line.length() - 1).trim();
+                    continue;
+                }
+
+                String[] parts = line.split("=", 2);
+                if (parts.length == 2 && !currentSection.isEmpty()) {
+                    configMap.put(currentSection + "_" + parts[0].trim(), parts[1].trim());
                 }
             }
-            lines.add(key + "=" + value);
-            bufferedReader.close();
-
-            /* Write changes back in configfile */
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(configFile));
-            for (String entry : lines) {
-                bufferedWriter.write(entry);
-                bufferedWriter.newLine();
-            }
-
-            bufferedWriter.flush();
-            bufferedWriter.close();
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
     }
 
-    public String getValue(String key) {
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(configFile))) {
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                if (line.startsWith(key + "=")) {
-                    String[] lineParts = line.split("=");
-                    if (lineParts.length > 1) {
-                        return lineParts[1];
-                    }
+    public void saveConfig() {
+        Map<String, Map<String, String>> groupedMap = new HashMap<>();
+        for (Map.Entry<String, String> entry : configMap.entrySet()) {
+            String[] parts = entry.getKey().split("_", 2);
+            if (parts.length == 2) {
+                groupedMap
+                        .computeIfAbsent(parts[0], k -> new LinkedHashMap<>())
+                        .put(parts[1], entry.getValue());
+            }
+        }
+
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(configFile))) {
+            for (Map.Entry<String, Map<String, String>> module : groupedMap.entrySet()) {
+                bufferedWriter.write("[" + module.getKey() + "]");
+                bufferedWriter.newLine();
+                for (Map.Entry<String, String> setting : module.getValue().entrySet()) {
+                    bufferedWriter.write(setting.getKey() + "=" + setting.getValue());
+                    bufferedWriter.newLine();
                 }
+                bufferedWriter.newLine();
             }
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
-        return null;
+    }
+
+
+    public String getValue(String key) {
+        return configMap.get(key);
+    }
+
+    public void setValue(String key, String value) {
+        configMap.put(key, value);
     }
 }

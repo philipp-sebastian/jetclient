@@ -29,7 +29,6 @@ public class SliderSetting extends Setting {
 
         this.sliderVal = (float) (mouseX - this.x) / Panel.getWidth();
         this.sliderVal = Math.max(0f, Math.min(1f, this.sliderVal));
-        notifyChange();
     }
 
     @Override
