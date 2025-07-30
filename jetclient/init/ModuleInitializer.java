@@ -5,6 +5,7 @@ import dev.jetclient.module.modules.combat.KillAura;
 import dev.jetclient.module.modules.movement.Sprint;
 import dev.jetclient.module.modules.movement.Step;
 import dev.jetclient.module.modules.player.ChestStealer;
+import dev.jetclient.module.modules.player.ScaffoldWalk;
 import dev.jetclient.module.modules.world.ChestESP;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class ModuleInitializer {
         modules.add(new ChestStealer());
         modules.add(new KillAura());
         modules.add(new ChestESP());
+        modules.add(new ScaffoldWalk());
 
         return modules;
     }
